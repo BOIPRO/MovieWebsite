@@ -1,3 +1,42 @@
-* {
+@import "tailwindcss";
+@theme {
+  --color-navbar: #ffffff;
+  --color-mainbackground : #020617 ;
+  --color-menubutton : #38bdf8;  
+}
+html {
   margin: 0;
+  
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+}
+html {
+  font-size: 12px; /* Mobile */
+}
+
+@media (min-width: 768px) {
+  html { font-size: 16px; } /* Tablet */
+}
+
+@media (min-width: 1280px) {
+  html { font-size: 18px; } /* Laptop */
+}
+@media (min-width: 1680px) {
+  html { font-size: 20px; } /* Laptop */
+}
+
+@media (min-width: 2000px) {
+  html { font-size: 28px; } 
 }
