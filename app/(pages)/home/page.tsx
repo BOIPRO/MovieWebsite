@@ -1,49 +1,21 @@
 import Trending from './Trending'
-import { Animes, Media,pageInfo } from "@/types/anilist"
-import ListAnime from './ListAnime';
+import { homeAnimes, Media} from "@/types/anilist"
+import ListAnime from '@/compoments/ListAnime';
 // ISR
 async function getAnimes() {
-  const query = `
-    query {
-      list: Page(page: 1, perPage: 30) {
-    pageInfo {
-      total
-      currentPage
-      lastPage
-      hasNextPage
-    }
-    media(sort: POPULARITY_DESC) {
-      id
-      title {
-        romaji
-      }
-      coverImage {
-        large
-      }
-      description
-    }
-  }
-
-      trending: Page(page: 1, perPage: 10) {
-        media(sort: TRENDING_DESC) { id title { romaji } coverImage { large } }
-      }
-    }
-  `;
-  const res = await fetch('https://graphql.anilist.co', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query }),
-    next: { revalidate: 3600 }
-  });
-  const json: Animes<Media> = await res.json();
-  const data = json.data;
-  const trendingnAnimes: Media[] = data.trending!.media;
-  const popularAnimes: Media[] = data.list.media;
-  const pageInfo : pageInfo = data.list.pageInfo!;
+  const getAmoutTrendingAnime = 10
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/home?trending=${getAmoutTrendingAnime}`);
+  const data: homeAnimes = await res.json();
+  const trendingnAnimes : Media[] = data.trending!;
+  const listMedia: Media[] = data.data.media;
+  const totalPages = data.data.totalPages;
+  const typeUrl = `${process.env.NEXT_PUBLIC_API_URL}/movies/page?`;
+  const limit = 30;
   return (
     <section className='max-w-[1200px] mx-auto '>
       <Trending animes={trendingnAnimes} />
-      <ListAnime popularAnimes={popularAnimes} pageInfo={pageInfo} />
+        <p className=" mt-2 text-[20px] font-montserrat uppercase font-extrabold text-transparent bg-clip-text bg-linear-to-r from-orange-500 via-red-500 to-red-600 border-b-[0.2px] border-red-500 pb-2 inline-block">Tất cả</p>
+      <ListAnime listMedia={listMedia} totalPages={totalPages} typeURL= {typeUrl} limit={limit} />
     </section>
   )
 }

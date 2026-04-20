@@ -8,8 +8,6 @@ interface pageProps {
     currentPage: number
 }
 const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
-    console.log(LastPage)
-    console.log(currentPage)
     const page: number[] = [];
     const offset: number = 2;
     const start = Math.max(2, currentPage - offset);
@@ -18,8 +16,8 @@ const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
         page.push(i);
     }
     return (
-        <div className="flex justify-center gap-4 py-5 text-sm items-center">
-            <button className={`w-[40px]  aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px]`} disabled={1 === currentPage}
+        <div className={`flex justify-center gap-4 py-5 text-sm items-center ${LastPage === 0 ? "hidden": null }`}>
+            <button className={`w-[40px]  aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${currentPage === 1 ?'hidden': null} `} disabled={1 === currentPage}
                 onClick={() => onPageChange(currentPage-1)}
             >
                 &lt;
@@ -42,12 +40,12 @@ const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
             {currentPage + 2 < LastPage ? <div className="cursor-pointer">
                 ...
             </div> : null}
-             <button key={LastPage} className={`w-[40px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} disabled={LastPage === currentPage}
+             <button key={LastPage === 1 ? 0:LastPage } className={`w-[40px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === 1 ? "hidden" : null}  ${LastPage === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} disabled={LastPage === currentPage}
                 onClick={() => onPageChange(LastPage)}
             >
                 {LastPage}
             </button>
-             <button className={`w-[40px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] `} disabled={LastPage === currentPage}
+             <button className={`w-[40px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === currentPage ? 'hidden':null} `} disabled={LastPage === currentPage}
                 onClick={() => onPageChange(currentPage+1)}
             >
                 &gt;

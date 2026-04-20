@@ -1,27 +1,21 @@
 export interface Media {
-  id: number;
-  title: {
-    romaji: string;
-  };
-  coverImage: {
-    large: string
-  };
-  description : string;
+  _id : string,
+  anilistId : number,
+  coverImage : string,
+  description : string,
+  titleEnglish : string,
+  titleRomaji : string,
+
 }
-export interface pageInfo {
-    total : number,
-    currentPage : number,
-    lastPage : number,
-    hasNextPage : boolean
+export interface pageAnime {
+  media : [
+    Media
+  ],
+  totalPages : number,
 }
-export interface Animes<T> {
-  data: {
-    list : {
-      pageInfo? : pageInfo
-      media : T[];
-    }
-    trending?: {
-      media: T[];
-    }
-  }
+export interface homeAnimes {
+  trending : [
+    Media 
+  ],
+  data : pageAnime
 }
