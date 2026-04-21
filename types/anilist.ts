@@ -8,14 +8,6 @@ export interface Media {
 
 }
 export interface pageAnime {
-  media : [
-    Media
-  ],
+  media : Media[],
   totalPages : number,
-}
-export interface homeAnimes {
-  trending : [
-    Media 
-  ],
-  data : pageAnime
 }

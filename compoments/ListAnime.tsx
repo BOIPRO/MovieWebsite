@@ -7,11 +7,12 @@ interface ListAnimeProp {
     listMedia: Media[];
     totalPages: number,
     typeURL : string,
-    limit : number
+    limit : number,
+    page : number
 }
-const ListAnime = ({ listMedia, totalPages ,typeURL,limit }: ListAnimeProp) => {
+const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp) => {
     const [listanime, Setlistanime] = useState(listMedia);
-    const [currentPage, SetcurrentPage] = useState(1);
+    const [currentPage, SetcurrentPage] = useState(page);
     const onPageChange = async (pageNumber: number) => {
         const url = `${typeURL}page=${pageNumber}&limit=${limit}`
         const res = await fetch( url, {

@@ -49,7 +49,8 @@ const Login = () => {
                 {error != "" ? <p className='text-center text-red-600 font-semibold'>{error}</p> : null}
                 <button className='bg-white text-black rounded-4xl py-3  cursor-pointer' >Login</button>
                 <div className='flex justify-center'>
-                    <Link className='font-semibold hover:underline' href={"/login"}>Login</Link>
+                    Don't have account?
+                    <Link className='font-semibold hover:underline' href={"/register"}>Register</Link>
                 </div>
             </div>
         </div>
