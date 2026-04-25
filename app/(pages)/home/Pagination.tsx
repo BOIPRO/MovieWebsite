@@ -1,7 +1,4 @@
 "use client"
-
-import { useState } from "react";
-
 interface pageProps {
     LastPage: number;
     onPageChange: (pageNumber: number) => void;

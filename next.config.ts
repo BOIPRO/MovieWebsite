@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 's4.anilist.co', // Tên miền chứa ảnh của AniList
+        hostname: 's4.anilist.co',
         port: '',
         pathname: '/file/anilistcdn/**',
       },
