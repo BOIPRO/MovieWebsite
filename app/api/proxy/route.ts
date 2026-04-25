@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const targetUrl = searchParams.get('url');
-  
+
   if (!targetUrl) return new Response("Missing URL", { status: 400 });
 
   try {
@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
       const fixedContent = content.replace(/^(?!#)(.*)$/gm, (match) => {
         const line = match.trim();
         if (line === '') return line;
-        
+
         const absoluteUrl = line.startsWith('http') ? line : baseUrl + line;
-        
+
         return `/api/proxy?url=${encodeURIComponent(absoluteUrl)}`;
       });
 
@@ -37,13 +37,24 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-    return new Response(response.body, {
+    // xu li MP4
+    const rangeHeader = request.headers.get('range');
+    const videoResponse = await fetch(targetUrl, {
       headers: {
-        'Content-Type': response.headers.get('Content-Type') || 'video/mp2t',
-        'Access-Control-Allow-Origin': '*',
+        'Referer': 'https://www.animesaturn.cx/watch?file=6vso7vSFrOHgk',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0',
+        'Range': rangeHeader || '', // Cực kỳ quan trọng để tua phim
       },
     });
-
+    return new Response(videoResponse.body, {
+  status: videoResponse.status, // Trả về 206 (Partial Content) nếu tua
+  headers: {
+    'Content-Type': videoResponse.headers.get('Content-Type') || 'video/mp4',
+    'Access-Control-Allow-Origin': '*',
+    'Accept-Ranges': 'bytes', // Báo cho trình duyệt là "Tôi cho phép tua đấy!"
+    'Content-Length': videoResponse.headers.get('Content-Length') || '',
+    'Content-Range': videoResponse.headers.get('Content-Range') || '',
+  },});
   } catch (error) {
     console.error("Proxy error:", error);
     return new Response("Proxy Error", { status: 502 });
