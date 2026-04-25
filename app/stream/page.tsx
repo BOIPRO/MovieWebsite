@@ -2,7 +2,7 @@ import React from 'react'
 import ReactPlayer from 'react-player'
 import VideoPlayer from './VideoPlayer';
 const page = async () => {
-    const res = await fetch("http://localhost:8080/movies/stream?epsisodeId=One-Piece-Sub-ITA-a-ep-1158")
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?epsisodeId=Jujutsu-Kaisen-a-ep-22`)
     const linkPlayList = await res.json();
     const url = `/api/proxy?url=${linkPlayList[0]}`
     return (

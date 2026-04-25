@@ -6,6 +6,8 @@ export interface Media {
   description : string,
   titleEnglish : string,
   titleRomaji : string,
+  averageScore : number,
+  genres : string[]
 
 }
 export interface pageAnime {
