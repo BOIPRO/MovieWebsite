@@ -8,7 +8,12 @@ export interface Media {
   titleRomaji : string,
   averageScore : number,
   genres : string[]
-
+}
+export interface Epsiode {
+  number : number,
+  id : string,
+  image : string,
+  imageHash : string
 }
 export interface pageAnime {
   media : Media[],

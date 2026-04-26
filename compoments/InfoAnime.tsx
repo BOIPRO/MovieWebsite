@@ -8,7 +8,7 @@ interface Prop {
 }
 const InfoAnime = ({ info }: Prop) => {
   return (
-    <div className="w-full flex flex-col md:flex-row  px-2 py-2  gap-5">
+    <div className="w-full flex flex-col md:flex-row  px-2 py-2   gap-5">
       <Image
         src={info.coverImage}
         alt="Movie Cover"
@@ -21,17 +21,21 @@ const InfoAnime = ({ info }: Prop) => {
       <div className="md:text-left text-center flex-4 flex flex-col gap-5 ">
         <h1 className="text-white  text-[24px] font-semibold tracking-tight ">{info.titleRomaji}</h1>
         <h1 className="text-[20px]">{info.titleEnglish}</h1>
-        <div className="flex gap-2 items-center justify-center md:justify-normal text-[1em]">
-          <p>Score: </p>
-          <FontAwesomeIcon className="text-yellow-300" icon={faStar} />
-          {info.averageScore}
+        <div className="flex flex-wrap justify-center gap-5 md:flex-col text-[16px]">
+          <div className="flex items-center gap-1">
+            <p>Score: </p>
+            
+              <FontAwesomeIcon className="text-yellow-300" icon={faStar} />
+              {info.averageScore}
+            
           </div>
-        <div className="flex gap-2 items-center justify-center md:justify-normal">
-          {info.genres.map((e:string) => (
-            <p key = {e}>{e}</p> 
-          ))}
+          <div className="flex flex-wrap px-5 md:px-0 justify-center md:justify-normal items-center gap-2">
+            {info.genres.map((e: string) => (
+              <div className="border px-2 py-2 rounded-lg bg-blue-950 border-blue-900" key={e}>{e}</div>
+            ))}
+          </div>
         </div>
-        <div className="line-clamp-3 px-5 md:px-0 max-w-full" dangerouslySetInnerHTML={{ __html: info.description }}></div>
+        <div className="line-clamp-10 px-5 md:px-0 max-w-full text-[16px] text-white/50 text-left" dangerouslySetInnerHTML={{ __html: info.description }}></div>
       </div>
     </div>
   )

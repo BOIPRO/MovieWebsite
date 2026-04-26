@@ -20,6 +20,17 @@ html::-webkit-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+  }
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+     background: linear-gradient(180deg, #ff7a18, #af002d);
+    border-radius: 10px;
+  }
+  .scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
   
 }
 html {
