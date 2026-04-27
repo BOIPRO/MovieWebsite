@@ -32,7 +32,7 @@ export default function VideoPlayer({ url }: Prop) {
     }
     return () => {
       if (hls) {
-        hls.destroy(); // Giờ thì hết lỗi 'never'
+        hls.destroy();
       }
     };
   }, [url]);
@@ -41,7 +41,7 @@ export default function VideoPlayer({ url }: Prop) {
     <video
       ref={videoRef}
       controls
-      style={{ width: "100%" }}
+      style={{ width: "100%", aspectRatio: "16/9" }}
       muted
     />
   );

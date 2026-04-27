@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Inter, Montserrat } from 'next/font/google'
-
 const inter = Inter({ subsets: ['latin','vietnamese'], variable: '--font-inter' })
 const montserrat = Montserrat({ subsets: ['latin','vietnamese'], variable: '--font-montserrat' })
 import "./globals.css";
