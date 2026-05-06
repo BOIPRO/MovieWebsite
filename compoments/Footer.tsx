@@ -1,13 +1,24 @@
+import Image from 'next/image'
 const Footer = () => {
   return (
     <div className="text-white/80 max-w-[1200px] mx-auto">
-        <div className="w-full mt-5">
-        <p className=" border-b max-w-[100px]">BMovie</p>
+      <div className="w-full mt-5">
+        <div className='flex items-center border-b max-w-[150px]'>
+          <Image
+            src="/icons/BMovie.svg"
+            alt="BMovie Logo"
+            width={0}
+            height={0}
+            style={{ width: '75px', height: 'auto' }} />
+          <p className="text-[16px] font-bold tracking-tight">
+            BMovie
+          </p>
+        </div>
         <div className="py-2">
-            <p>Developer : BoiDev</p>
-        <p>Web xem anime tuyệt vời với tính năng cập nhật hàng giờ. Mang đến trải nghiệm tối ưu nhất khi xem phim</p>
+          <p>Developer : BoiDev</p>
+          <p>Web xem anime tuyệt vời với tính năng cập nhật hàng giờ. Mang đến trải nghiệm tối ưu nhất khi xem phim</p>
         </div>
-        </div>
+      </div>
     </div>
   )
 }

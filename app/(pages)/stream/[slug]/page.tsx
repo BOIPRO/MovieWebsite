@@ -18,11 +18,12 @@ const page = async ({params} : Props) => {
     const slugAnime = match[1]
     const anilistId = match[2];     
     const episodeSlug = match[3];
-    const match2 = slug.match(/tap-(\d+)$/);
+    const match2 = slug.match(/tap-(.*)/);
     const episodeNumber = match2 ? match2[1] : null!;
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}`);
     const data : StreamingResponse = await res.json()
     const url = data.url
+    console.log(episodeNumber)
       return (
       <div className='max-w-[1200px] mx-auto'>
         <VideoPlayer url={url}/>
