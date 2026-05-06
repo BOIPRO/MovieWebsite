@@ -5,9 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Episode } from '@/types/episode';
 interface Prop {
     id: string,
-    slug : string
+    slug : string,
+    episodeNumber? : string
 }
-const ListEpsiodes = ({ id,slug }: Prop) => {
+const ListEpsiodes = ({ id,slug,episodeNumber }: Prop) => {
     const { data , isLoading } = useQuery({
         queryKey: [`${id}`],
         queryFn: async () => {
@@ -17,7 +18,7 @@ const ListEpsiodes = ({ id,slug }: Prop) => {
         staleTime: 1000 * 1,
     });
     return (
-        <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5'>
+        <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5 text-white'>
             <p className='mb-5 uppercase'>Danh sach phim</p>
             <div className='grid grid-cols-5 lg:grid-cols-12 max-h-[300px]  overflow-y-auto scrollbar-custom gap-3 text-center text-[16px]'>
                 {isLoading ?
@@ -36,7 +37,7 @@ const ListEpsiodes = ({ id,slug }: Prop) => {
                             data?.map((e: Episode) => (
                                 <Link
                                     href={`/stream/${slug}-${e.episodeSlug}`}
-                                    className='px-2 py-2 rounded-sm cursor-pointer bg-slate-700 hover:bg-blue-500'
+                                    className={`${e.episodeNumber === episodeNumber ? 'bg-blue-500 cursor-not-allowed pointer-events-none':"bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500`}
                                     key={e.episodeSlug}
                                 >
                                     {e.episodeNumber}
