@@ -36,7 +36,7 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
         <div id="scroll-root" className=" mt-5 px-2 text-white min-h-screen">
             <div className="grid grid-cols-3 gap-4 md:grid-cols-5 py-2 overflow-hidden ">
                 {listanime.map((e: Media) => (
-                    <Link href={`/info/${e.anilistId}`} className="flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative" key={e.anilistId}>
+                    <Link href={`/info/${e.slug}`} className="flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative" key={e.slug}>
                         <Image
                             src={e.coverImage}
                             alt="Movie Cover"
@@ -52,10 +52,9 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
                                 {e.titleRomaji}
                             </h3>
 
-                            <div
+                            <span
                                 className="text-gray-300 text-xs line-clamp-1 mt-1 max-w-[90%]"
-                                dangerouslySetInnerHTML={{ __html: e.description }}
-                            />
+                            > {e.description?.replace(/<[^>]*>?/gm, '')}</span>
                         </div>
                     </Link>
                 ))}

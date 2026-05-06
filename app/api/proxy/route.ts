@@ -9,8 +9,8 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(targetUrl, {
       headers: {
-        'Referer': 'https://www.animesaturn.cx/watch?file=6vso7vSFrOHgk',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0',
+        'Referer': 'https://storage.googleapiscdn.com/player/1f94b5e30bfa07c84b528026f7d952b7453077df872119feb2d79cd140bd84b2?nextName=003&nextUrl=https%3A%2F%2Fanimevietsub.bz%2Fphim%2Fone-piece-dao-hai-tac-a1%2Ftap-003-37.html',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36',
       },
     });
 
