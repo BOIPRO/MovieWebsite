@@ -15,7 +15,8 @@ const ListEpsiodes = ({ id,slug,episodeNumber }: Prop) => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${id}`);
             return  await res.json();
         },
-        staleTime: 1000 * 1,
+        staleTime: 1000 * 60*5,
+        refetchOnWindowFocus: false // ko cache khi user bam quay lai tab/browser
     });
     return (
         <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5 text-white'>

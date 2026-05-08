@@ -5,19 +5,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { redirect } from "next/navigation";
 const Register = () => {
-    const [username, Setusername] = useState("")
-    const [password, Setpassword] = useState("")
-    const [error, Seterror] = useState("")
+    const [username, Setusername] = useState("");
+    const [password, Setpassword] = useState("");
+    const [email, Setemail] = useState("");
+    const [error, Seterror] = useState("");
     const [showpassword, SetShowpassword] = useState(false)
 
     const handlerUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         Setusername(e.target.value);
+    }
+    const handleremail = (e: React.ChangeEvent<HTMLInputElement>) => {
+        Setemail(e.target.value);
     }
     const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         Setpassword(e.target.value);
     }
     const handlerShow = () => {
         SetShowpassword(!showpassword)
+    }
+    const isValidEmail = (email : string) => {
+    const regex =
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    return regex.test(email);
+    }
+    const handlerSubmit = () => {
+          if (!isValidEmail(email) || username === "" || password === "") {
+            Seterror("Co loi xay ra vui long nhap lai")
+        return;
+    }
     }
 
     return (
@@ -45,12 +61,15 @@ const Register = () => {
                             <FontAwesomeIcon icon={showpassword ? faEye : faEyeSlash} />
                         </button>
                     </div>
+                    <input value={email ?? ""} onChange={handleremail} placeholder='Email'className=' border border-[rgba(255,255,255,0.5)] rounded-4xl focus:outline-none focus:ring-2 focus:ring-[rgba(255,255,255,0.8)] py-2 px-3 placeholder-white'></input>
                 </div>
                 {error != "" ? <p className='text-center text-red-600 font-semibold'>{error}</p> : null}
-                <button className='bg-white text-black rounded-4xl py-3  cursor-pointer' >Register</button>
+                <button onClick={handlerSubmit} className='bg-white text-black rounded-4xl py-3  cursor-pointer' >Register</button>
                 <div className='flex justify-center'>
+                    <p>Da co tai khoan?</p>
                     <Link className='font-semibold hover:underline' href={"/login"}>Login</Link>
                 </div>
+                <Link className='font-semibold hover:underline mx-auto' href={"/home"}>Trang chu</Link>
             </div>
         </div>
             
