@@ -9,7 +9,6 @@ const Login = () => {
     const [password, Setpassword] = useState("")
     const [error, Seterror] = useState("")
     const [showpassword, SetShowpassword] = useState(false)
-
     const handlerUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         Setusername(e.target.value);
     }
@@ -19,6 +18,7 @@ const Login = () => {
     const handlerShow = () => {
         SetShowpassword(!showpassword)
     }
+
 
     return (
         <div className="w-screen h-screen overflow-hidden flex items-center justify-around" >
