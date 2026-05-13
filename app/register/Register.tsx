@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -23,20 +22,20 @@ const Register = () => {
     const [email, Setemail] = useState("");
     const [error, Seterror] = useState("");
     const [showpassword, SetShowpassword] = useState(false)
-    const [isPopup, setIsPopup] = useState(true)
-    const handlerUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [isPopup, setIsPopup] = useState(false)
+    const handlerUser  = (e: React.ChangeEvent<HTMLInputElement>) :void => {
         Setusername(e.target.value);
     }
-    const handleremail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleremail = (e: React.ChangeEvent<HTMLInputElement>) : void => {
         Setemail(e.target.value);
     }
-    const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>) : void => {
         Setpassword(e.target.value);
     }
-    const handlerShow = () => {
+    const handlerShow = () : void => {
         SetShowpassword(!showpassword)
     }
-    const isValidEmail = (email: string) => {
+    const isValidEmail = (email: string) : boolean => {
         const regex =
             /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -89,9 +88,9 @@ const Register = () => {
                     <CardHeader className='text-white'>
                         <CardTitle>Register</CardTitle>
                         <CardAction>
-                            <Link href={'/login'}>
-                                <Button variant="link">Login</Button>
-                            </Link>
+                            <a href="login" className='hover:underline text-[16px]'>
+                                Login
+                            </a>
                         </CardAction>
                     </CardHeader>
                     <CardContent>
@@ -118,12 +117,6 @@ const Register = () => {
                                 <div className="grid gap-2">
                                     <div className="flex items-center">
                                         <Label htmlFor="password">Password</Label>
-                                        <a
-                                            href="#"
-                                            className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                        >
-                                            Forgot your password?
-                                        </a>
                                     </div>
                                     <div className="relative">
                                         <Input id="password" value={password} type={showpassword ? "text" : "password"} required className='text-white border-white/40 ' onChange={(e) => handlerPassword(e)} />
