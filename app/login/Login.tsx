@@ -15,12 +15,13 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 const Login = () => {
     const [username, Setusername] = useState("")
     const [password, Setpassword] = useState("")
     const [error, Seterror] = useState("")
     const [showpassword, SetShowpassword] = useState(false)
+    const router = useRouter();
     const handlerUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         Setusername(e.target.value);
     }
@@ -30,7 +31,24 @@ const Login = () => {
     const handlerShow = () => {
         SetShowpassword(!showpassword)
     }
-    const handlerSubmit = async() => {
+    const handlerSubmit = async () => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include'
+            });
+            const data = await res.json();
+            if (res.ok) {
+                console.log(data.accessToken)
+                router.push('/home');
+            } else {
+                Seterror(data.message);
+            }
+        } catch (error) {
+            Seterror("Co loi xay ra, vui long thu lai")
+        }
 
     }
 
@@ -41,8 +59,8 @@ const Login = () => {
                     <CardTitle>Login</CardTitle>
                     <CardAction>
                         <a href="register" className='hover:underline text-[16px]'>
-                                Register
-                            </a>
+                            Register
+                        </a>
                     </CardAction>
                 </CardHeader>
                 <CardContent>
