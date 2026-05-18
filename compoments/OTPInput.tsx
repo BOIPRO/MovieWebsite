@@ -41,7 +41,6 @@ const OTPInput = ({ length = 6, onComplete }: Props) => {
       }
     }
   };
-  console.log(otp)
   return (
     <div className="flex justify-center gap-2 z-50 ">
       {otp.map((data, index) => (

@@ -6,9 +6,7 @@ type Props = {
   }
 }
 interface StreamingResponse {
-  _id : string,
   url : string
-
 }
 const page = async ({params} : Props) => {
     const {slug} = await params

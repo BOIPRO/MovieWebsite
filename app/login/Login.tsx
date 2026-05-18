@@ -41,7 +41,7 @@ const Login = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                console.log(data.accessToken)
+                localStorage.setItem('user', JSON.stringify(data.user));
                 router.push('/home');
             } else {
                 Seterror(data.message);

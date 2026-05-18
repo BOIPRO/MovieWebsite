@@ -1,5 +1,4 @@
 "use client"
-import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useQuery } from "@tanstack/react-query";
 import { Episode } from '@/types/episode';

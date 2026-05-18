@@ -1,4 +1,3 @@
-"use client"
 import { Media } from "@/types/anilist"
 import Image from "next/image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
