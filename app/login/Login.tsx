@@ -39,14 +39,14 @@ const Login = () => {
                 body: JSON.stringify({ username, password }),
                 credentials: 'include'
             });
-            const data = await res.json();
-            if (res.ok) {
-                localStorage.setItem('user', JSON.stringify(data.user));
+            if (res.ok) 
                 router.push('/home');
-            } else {
-                Seterror(data.message);
+            else {
+                const data = await res.json();
+                Seterror(data.message || "Dang nhap that bai");
             }
         } catch (error) {
+            console.log(error)
             Seterror("Co loi xay ra, vui long thu lai")
         }
 
