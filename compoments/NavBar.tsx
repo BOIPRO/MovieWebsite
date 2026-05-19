@@ -38,6 +38,14 @@ const NavBar = ({ user }: Prop) => {
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         SetcontextSearch(e.target.value)
     }
+    const handleLogout = async () => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+        router.refresh();
+    };
     return (
         <nav className=''>
             <div className='bg-mainbackground w-screen xl:flex-row   '>
@@ -55,7 +63,7 @@ const NavBar = ({ user }: Prop) => {
                         <input value={contextSearch ? contextSearch : ""} onKeyDown={handleKeyDown} onChange={handleSearch} className='w-full rounded-2xl border px-10 h-10 focus:rounded-lg transition-all duration-300 ease-in' type="text" placeholder='Tìm kiếm phim' />
                         <FontAwesomeIcon className='absolute top-1/2 -translate-y-1/2 left-1.5 ' icon={faMagnifyingGlass} />
                     </div>
-                    {user.username ? (
+                    {user?.username ? (
                         <div className='text-navbar flex gap-2 items-center'>
                             <p className='text-[16px]'>{user.username}</p>
                             <DropdownMenu>
@@ -73,7 +81,7 @@ const NavBar = ({ user }: Prop) => {
                                     <DropdownMenuGroup>
                                         <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
                                         <DropdownMenuItem>Profile</DropdownMenuItem>
-                                        <DropdownMenuItem >Logout</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={handleLogout} >Logout</DropdownMenuItem>
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
