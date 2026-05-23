@@ -1,7 +1,7 @@
 "use client"
 import { Media,pageAnime} from '@/types/anilist'
 import Image from "next/image"
-import Pagination from '../app/(pages)/home/Pagination';
+import Pagination from './Pagination';
 import { useState } from 'react';
 import Link from 'next/link'
 interface ListAnimeProp {

@@ -1,5 +1,5 @@
-import Footer from "@/compoments/Footer";
-import NavBar from "../../compoments/NavBar";
+import Footer from "@/components/layout/Footer";
+import NavBar from "../../components/layout/NavBar";
 import Providers from "../Provider";
 import { cookies } from "next/headers";
 import { decodeTokenServer } from "@/helper/decodejwt";

@@ -4,7 +4,7 @@ import { Inter, Montserrat, Geist } from 'next/font/google'
 const inter = Inter({ subsets: ['latin','vietnamese'], variable: '--font-inter' })
 const montserrat = Montserrat({ subsets: ['latin','vietnamese'], variable: '--font-montserrat' })
 import "./globals.css";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "BMovie",
@@ -25,7 +25,7 @@ export default function RootLayout({
   
   return (
     <html
-      lang="en" className={cn("font-sans", inter.variable)}>
+      lang="en">
       <body className={`${inter.variable} ${montserrat.variable} font-sans`} >{children}</body>
     </html>
   );

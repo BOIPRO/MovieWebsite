@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
-import OTPInput from '@/compoments/OTPInput'
+import OTPInput from '@/components/common/OTPInput'
 import { Button } from "@/components/ui/button"
 import { notFound } from "next/navigation"
 import {

@@ -1,6 +1,6 @@
-import InfoAnime from "@/compoments/InfoAnime";
+import InfoAnime from "@/app/(pages)/info/[slug]/InfoAnime";
 import { Media } from "@/types/anilist";
-import ListEpsiodes from "@/compoments/ListEpisodes";
+import ListEpsiodes from "@/components/common/ListEpisodes";
 type Props = {
   params: {
     slug: string

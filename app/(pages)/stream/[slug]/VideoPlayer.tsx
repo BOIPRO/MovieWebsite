@@ -36,15 +36,14 @@ export default function VideoPlayer({ url }: Prop) {
   //     }
   //   };
   // }, [url]);
-  console.log(url)
   return (
    <div className="flex justify-center aspect-video">
       <iframe
-        src= {url}
-        title="YouTube video player"
+        src= {`${process.env.NEXT_PUBLIC_STREAM_URL}${url}`}
         allowFullScreen
-        loading="lazy" // Tối ưu hiệu suất
+        loading="lazy"
         className="w-full rounded-lg shadow-lg"
+        allow="autoplay; encrypted-media"
        sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-presentation allow-popups "
       ></iframe>
     </div>

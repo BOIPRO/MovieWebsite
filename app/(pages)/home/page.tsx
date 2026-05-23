@@ -1,6 +1,6 @@
 import Trending from './Trending'
 import { Media, pageAnime } from "@/types/anilist"
-import ListAnime from '@/compoments/ListAnime';
+import ListAnime from '@/components/common/ListAnime';
 // ISR
 export const revalidate = 300
 async function getAnimes() {
@@ -18,6 +18,7 @@ async function getAnimes() {
   const typeUrl = `${process.env.NEXT_PUBLIC_API_URL}/movies/page?`;
   return (
     <section className='max-w-[1200px] mx-auto '>
+      <p className=" mb-5 text-[20px] font-inter uppercase font-bold text-transparent bg-clip-text bg-linear-to-r from-orange-500 via-red-500 to-red-600 border-b-[0.2px] border-red-500 pb-2 inline-block">Anime đang thịnh thành </p>
       <Trending animes={trendingAnimes} />
       <p className=" mt-2 text-[20px] font-montserrat uppercase font-extrabold text-transparent bg-clip-text bg-linear-to-r from-orange-500 via-red-500 to-red-600 border-b-[0.2px] border-red-500 pb-2 inline-block">Tất cả</p>
       <ListAnime listMedia={listMedia} totalPages={totalPages} typeURL={typeUrl} limit={limit} page={pageAnime} />

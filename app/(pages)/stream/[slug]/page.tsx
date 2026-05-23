@@ -1,4 +1,4 @@
-import ListEpsiodes from '@/compoments/ListEpisodes';
+import ListEpsiodes from '@/components/common/ListEpisodes';
 import VideoPlayer from './VideoPlayer';
 type Props = {
   params: {
@@ -21,7 +21,6 @@ const page = async ({params} : Props) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}`);
     const data : StreamingResponse = await res.json()
     const url = data.url
-    console.log(episodeNumber)
       return (
       <div className='max-w-[1200px] mx-auto'>
         <VideoPlayer url={url}/>

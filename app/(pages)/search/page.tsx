@@ -1,4 +1,4 @@
-import ListAnime from "@/compoments/ListAnime";
+import ListAnime from "@/components/common/ListAnime";
 import { pageAnime } from "@/types/anilist";
 export default async function Page({
   searchParams,
