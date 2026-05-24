@@ -4,6 +4,7 @@ import Image from "next/image"
 import Pagination from './Pagination';
 import { useState } from 'react';
 import Link from 'next/link'
+import { useQueryClient } from "@tanstack/react-query";
 interface ListAnimeProp {
     listMedia: Media[];
     totalPages: number,
@@ -15,6 +16,7 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
     const [listanime, Setlistanime] = useState(listMedia);
     const [currentPage, SetcurrentPage] = useState(page);
     const onPageChange = async (pageNumber: number) => {
+        
         const url = `${typeURL}page=${pageNumber}&limit=${limit}`
         const res = await fetch( url, {
             method: 'GET',

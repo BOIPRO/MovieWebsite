@@ -46,6 +46,7 @@ const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
                         })
                             .map((e: Episode) => (
                             <Link
+                                prefetch = {false}
                                 href={`/stream/${slug}-${e.episodeSlug}`}
                                 className={episodeNumber? `${formatEpisodeNumber(e.episodeNumber) === formatEpisodeNumber(episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500` :
                                  "bg-slate-700 px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500"}
