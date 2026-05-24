@@ -4,19 +4,23 @@ import { useQuery } from "@tanstack/react-query";
 import { Episode } from '@/types/episode';
 interface Prop {
     id: string,
-    slug : string,
-    episodeNumber? : string
+    slug: string,
+    episodeNumber?: string
 }
-const ListEpsiodes = ({ id,slug,episodeNumber }: Prop) => {
-    const { data , isLoading } = useQuery({
+const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
+    const { data, isLoading } = useQuery({
         queryKey: [`${id}`],
         queryFn: async () => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${id}`);
-            return  await res.json();
+            return await res.json();
         },
-        staleTime: 1000 * 60*5,
+        staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false // ko cache khi user bam quay lai tab/browser
     });
+    const formatEpisodeNumber = (num: string) => {
+        return num.replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase()
+    }
     return (
         <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5 text-white'>
             <p className='mb-5 uppercase'>Danh sach phim</p>
@@ -34,15 +38,22 @@ const ListEpsiodes = ({ id,slug,episodeNumber }: Prop) => {
                     (!data || data.length === 0) ? (
                         <div className='col-span-full'>Chua co phim thong cam nhe hihi</div>
                     ) : (
-                            data?.map((e: Episode) => (
-                                <Link
-                                    href={`/stream/${slug}-${e.episodeSlug}`}
-                                    className={`${e.episodeNumber === episodeNumber ? 'bg-blue-500 cursor-not-allowed pointer-events-none':"bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500`}
-                                    key={e.episodeSlug}
-                                >
-                                    {e.episodeNumber}
-                                </Link>
-                            ))
+                        data?.sort((a: Episode, b: Episode) => {
+                            const numA = parseInt(a.episodeNumber)
+                            const numB = parseInt(b.episodeNumber)
+
+                            return numA - numB
+                        })
+                            .map((e: Episode) => (
+                            <Link
+                                href={`/stream/${slug}-${e.episodeSlug}`}
+                                className={episodeNumber? `${formatEpisodeNumber(e.episodeNumber) === formatEpisodeNumber(episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500` :
+                                 "bg-slate-700 px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500"}
+                                key={e.episodeSlug}
+                            >
+                                {e.episodeNumber}
+                            </Link>
+                        ))
                     )}
             </div>
         </div>
