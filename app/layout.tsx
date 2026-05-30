@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Inter, Montserrat, Geist } from 'next/font/google'
 const inter = Inter({ subsets: ['latin','vietnamese'], variable: '--font-inter' })
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${montserrat.variable} font-sans`} >
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
