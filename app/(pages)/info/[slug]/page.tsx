@@ -1,6 +1,7 @@
 import InfoAnime from "@/app/(pages)/info/[slug]/InfoAnime";
 import { Media } from "@/types/anilist";
 import ListEpsiodes from "@/components/common/ListEpisodes";
+import WatchNow from "./WatchNow";
 type Props = {
   params: {
     slug: string

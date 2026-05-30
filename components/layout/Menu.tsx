@@ -9,7 +9,7 @@ const Menu = () => {
                 <FontAwesomeIcon icon={faHouse} />
                 <p>Trang Chủ</p>
             </Link>
-            <button className='flex gap-2 items-center cursor-pointer hover:text-menubutton'>
+            {/* <button className='flex gap-2 items-center cursor-pointer hover:text-menubutton'>
                 <FontAwesomeIcon icon={faBarsStaggered} />
                 <p>Thể Loại</p>
             </button>
@@ -20,7 +20,7 @@ const Menu = () => {
             <button className='flex gap-2 items-center cursor-pointer hover:text-menubutton'>
                 <FontAwesomeIcon icon={faCalendarDays} />
                 <p>Lịch chiếu</p>
-            </button>
+            </button> */}
         </div>
     )
 }

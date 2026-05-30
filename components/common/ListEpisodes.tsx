@@ -1,13 +1,33 @@
 "use client"
+import { useEffect, useRef } from "react";
 import Link from 'next/link'
 import { useQuery } from "@tanstack/react-query";
 import { Episode } from '@/types/episode';
+import { usePathname } from "next/navigation";
+import WatchNow from "@/app/(pages)/info/[slug]/WatchNow";
 interface Prop {
     id: string,
     slug: string,
     episodeNumber?: string
 }
 const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+    useEffect(() => {
+        if (pathname.includes("/info") && scrollRef.current) {
+            scrollRef.current.scrollTop = 0;
+            sessionStorage.setItem(
+                `scroll_${slug}`,
+                scrollRef.current.scrollTop.toString()
+            );
+            return;
+        }
+        if (!slug) return;
+        const savedScrollTop = sessionStorage.getItem(`scroll_${slug}`); // kieu string|| null
+        if (savedScrollTop && scrollRef.current) {
+            scrollRef.current.scrollTop = parseInt(savedScrollTop, 10); // chuyen sang number
+        }
+    }, [slug]);
     const { data, isLoading } = useQuery({
         queryKey: [`${id}`],
         queryFn: async () => {
@@ -19,45 +39,59 @@ const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
     });
     const formatEpisodeNumber = (num: string) => {
         return num.replace(/[^a-zA-Z0-9]/g, "")
-    .toLowerCase()
+            .toLowerCase()
     }
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            sessionStorage.setItem(
+                `scroll_${slug}`,
+                scrollRef.current.scrollTop.toString()
+            );
+        }
+    };
     return (
-        <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5 text-white'>
-            <p className='mb-5 uppercase'>Danh sach phim</p>
-            <div className='grid grid-cols-5 lg:grid-cols-12 max-h-[300px]  overflow-y-auto scrollbar-custom gap-3 text-center text-[16px]'>
-                {isLoading ?
-                    Array.from({ length: 24 }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="px-2 py-2 rounded-sm bg-slate-700 animate-pulse"
-                        >
-                            <div className="h-full w-full bg-slate-600 rounded-sm"></div>
-                        </div>
-                    ))
-                    :
-                    (!data || data.length === 0) ? (
-                        <div className='col-span-full'>Chua co phim thong cam nhe hihi</div>
-                    ) : (
-                        data?.sort((a: Episode, b: Episode) => {
-                            const numA = parseInt(a.episodeNumber)
-                            const numB = parseInt(b.episodeNumber)
-
-                            return numA - numB
-                        })
-                            .map((e: Episode) => (
-                            <Link
-                                prefetch = {false}
-                                href={`/stream/${slug}-${e.episodeSlug}`}
-                                className={episodeNumber? `${formatEpisodeNumber(e.episodeNumber) === formatEpisodeNumber(episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500` :
-                                 "bg-slate-700 px-2 py-2 rounded-sm cursor-pointer  hover:bg-blue-500"}
-                                key={e.episodeSlug}
+        <>
+            {
+                data && data.length > 0 && pathname.includes("/info") ? <WatchNow firstEpisodeUrl={`/stream/${slug}-${data[0].episodeSlug}`} /> : null
+            }
+            <div className='px-5 w-full bg-slate-900  rounded-lg mt-5 py-5 text-white'>
+                <p className='mb-5 uppercase'>Danh sách tập</p>
+                <div ref={scrollRef} onScroll={handleScroll} className='grid grid-cols-5 lg:grid-cols-12 max-h-[300px]  overflow-y-auto scrollbar-custom gap-3 text-center text-[16px]'>
+                    {isLoading ?
+                        Array.from({ length: 24 }).map((_, index) => (
+                            <div
+                                key={index}
+                                className="px-2 py-2 rounded-sm bg-slate-700 animate-pulse"
                             >
-                                {e.episodeNumber}
-                            </Link>
+                                <div className="h-full w-full bg-slate-600 rounded-sm"></div>
+                            </div>
                         ))
-                    )}
+                        :
+                        (!data || data.length === 0) ? (
+                            <div className='col-span-full'>Chưa có tập phim nào</div>
+                        ) : (
+                            data?.sort((a: Episode, b: Episode) => {
+                                const numA = parseInt(a.episodeNumber)
+                                const numB = parseInt(b.episodeNumber)
+
+                                return numA - numB
+                            })
+                                .map((e: Episode) => (
+                                    <Link
+                                        prefetch={false}
+                                        href={`/stream/${slug}-${e.episodeSlug}`}
+                                        className={episodeNumber ? `${formatEpisodeNumber(e.episodeNumber) === formatEpisodeNumber(episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500` :
+                                            "bg-slate-700 px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500"}
+                                        key={e.episodeSlug}
+                                    >
+                                        {e.episodeNumber}
+                                    </Link>
+                                ))
+                        )}
+                </div>
             </div>
-        </div>
+        </>
+
     )
 }
 

@@ -1,4 +1,5 @@
 "use client"
+
 interface pageProps {
     LastPage: number;
     onPageChange: (pageNumber: number) => void;
@@ -13,7 +14,7 @@ const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
         page.push(i);
     }
     return (
-        <div className={`flex gap-5 justify-center  py-5 text-sm lg:text-lg items-center ${LastPage === 0 ? "hidden" : null}`}>
+        <div className={`flex gap-4 flex-row justify-center  py-5 text-[16px] sm:text-base  items-center ${LastPage === 0 ? "hidden" : null}`}>
             <button className={` w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${currentPage === 1 ? 'hidden' : null} `} disabled={1 === currentPage}
                 onClick={() => onPageChange(currentPage - 1)}
             >
