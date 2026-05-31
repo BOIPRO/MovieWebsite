@@ -1,5 +1,7 @@
 import ListEpsiodes from '@/components/common/ListEpisodes';
 import VideoPlayer from './VideoPlayer';
+import { Suspense } from 'react';
+import Loading from '@/app/loading';
 type Props = {
   params: {
     slug: string
@@ -23,7 +25,9 @@ const page = async ({params} : Props) => {
     const url = data.url
       return (
       <div className='max-w-[1200px] mx-auto'>
-        <VideoPlayer url={url}/>
+        <Suspense fallback={<Loading />}>
+          <VideoPlayer url={url}/>
+        </Suspense>
         <ListEpsiodes slug={`${slugAnime}-${anilistId}`} id = {anilistId} episodeNumber={episodeNumber} />
       </div>
     )
