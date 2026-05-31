@@ -4,7 +4,6 @@ import Image from "next/image"
 import Pagination from './Pagination';
 import { useState } from 'react';
 import Link from 'next/link'
-import { useQueryClient } from "@tanstack/react-query";
 interface ListAnimeProp {
     listMedia: Media[];
     totalPages: number,
@@ -15,8 +14,12 @@ interface ListAnimeProp {
 const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp) => {
     const [listanime, Setlistanime] = useState(listMedia);
     const [currentPage, SetcurrentPage] = useState(page);
+    const [isClicked, setIsClicked] = useState(false);
+    const [isClickPage, setIsClickPage] = useState(false);
     const onPageChange = async (pageNumber: number) => {
-        
+        if (isClickPage) return;
+        // chan click ho den khi chay xong
+        setIsClickPage(true);
         const url = `${typeURL}page=${pageNumber}&limit=${limit}`
         const res = await fetch( url, {
             method: 'GET',
@@ -33,12 +36,22 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
                 }
             }
         }, 100);
+        // Cho click button hoat dong lai
+         setIsClickPage(false);
+    }
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (isClicked) {
+      e.preventDefault();
+      return;
+    }
+        setIsClicked(true);
     }
     return (
         <div id="scroll-root" className=" mt-5 px-2 text-white min-h-screen">
             <div className="grid grid-cols-3 gap-4 md:grid-cols-5 py-2 overflow-hidden ">
                 {listanime.map((e: Media) => (
-                    <Link href={`/info/${e.slug}`} className="flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative" key={e.slug}>
+                    <Link href={`/info/${e.slug}`} onClick={handleClick}
+                     className={` flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative`} key={e.slug}>
                         <Image
                             src={e.coverImage}
                             alt="Movie Cover"

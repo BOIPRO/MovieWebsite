@@ -1,6 +1,7 @@
 "use client"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import { useQuery } from "@tanstack/react-query";
 import { Episode } from '@/types/episode';
 import { usePathname } from "next/navigation";
@@ -11,8 +12,10 @@ interface Prop {
     episodeNumber?: string
 }
 const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
+    const [isCalling, setIsCalling] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
+    const router = useRouter();
     useEffect(() => {
         if (pathname.includes("/info") && scrollRef.current) {
             scrollRef.current.scrollTop = 0;
@@ -49,6 +52,11 @@ const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
             );
         }
     };
+    const handleEpisode = (url: string) => {
+        if(isCalling) return;
+        setIsCalling(true);
+        router.push(url);
+    }
     return (
         <>
             {
@@ -77,15 +85,14 @@ const ListEpsiodes = ({ id, slug, episodeNumber }: Prop) => {
                                 return numA - numB
                             })
                                 .map((e: Episode) => (
-                                    <Link
-                                        prefetch={false}
-                                        href={`/stream/${slug}-${e.episodeSlug}`}
+                                    <button
+                                        onClick={() => handleEpisode(`/stream/${slug}-${e.episodeSlug}`)}
                                         className={episodeNumber ? `${formatEpisodeNumber(e.episodeNumber) === formatEpisodeNumber(episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-slate-700"} px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500` :
                                             "bg-slate-700 px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500"}
                                         key={e.episodeSlug}
                                     >
                                         {e.episodeNumber}
-                                    </Link>
+                                    </button>
                                 ))
                         )}
                 </div>
