@@ -1,7 +1,6 @@
-import ListEpsiodes from '@/components/common/ListEpisodes';
-import VideoPlayer from './VideoPlayer';
-import { Suspense } from 'react';
-import Loading from '@/app/loading';
+import VideoPlayer from './VideoPlayernew';
+import { Episode } from '@/types/episode';
+import ListEpsiodes from "@/components/common/ListEpisodes";
 type Props = {
   params: {
     slug: string
@@ -20,15 +19,19 @@ const page = async ({params} : Props) => {
     const episodeSlug = match[3];
     const match2 = slug.match(/tap-(.*)/);
     const episodeNumber = match2 ? match2[1] : null!;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}`);
-    const data : StreamingResponse = await res.json()
-    const url = data.url
-      return (
-      <div className='max-w-[1200px] mx-auto'>
-        <Suspense fallback={<Loading />}>
-          <VideoPlayer url={url}/>
-        </Suspense>
-        <ListEpsiodes slug={`${slugAnime}-${anilistId}`} id = {anilistId} episodeNumber={episodeNumber} />
+    const [resdata,resEpisode] = await Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`,{cache : 'no-store'}),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${anilistId}`,{ next: { revalidate: 86400 } })
+    ])
+    const listEpisode : Episode[] = await resEpisode.json()
+    const data = await resdata.text()
+      return (  
+      <div className='max-w-[1350px]  mx-auto '>
+        <div className='gap-2  xl:flex xl:h-[500px]'>
+           <VideoPlayer m3u8= {data} />
+            <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumber={episodeNumber} />
+        </div>
+          
       </div>
     )
     }

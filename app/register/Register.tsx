@@ -137,7 +137,7 @@ const Register = () => {
                         <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
                             Dang ki
                         </Button>
-                        <Link href={'/home'} className='w-full'>
+                        <Link href={'/'} className='w-full'>
                             <Button type="submit" className="w-full border-white/40 border text-white">
                                 Quay ve trang chu
                             </Button>

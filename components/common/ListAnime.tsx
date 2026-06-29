@@ -1,5 +1,5 @@
 "use client"
-import { Media,pageAnime} from '@/types/anilist'
+import { Media, pageAnime } from '@/types/anilist'
 import Image from "next/image"
 import Pagination from './Pagination';
 import { useState } from 'react';
@@ -7,11 +7,11 @@ import Link from 'next/link'
 interface ListAnimeProp {
     listMedia: Media[];
     totalPages: number,
-    typeURL : string,
-    limit : number,
-    page : number
+    typeURL: string,
+    limit: number,
+    page: number
 }
-const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp) => {
+const ListAnime = ({ listMedia, totalPages, typeURL, limit, page }: ListAnimeProp) => {
     const [listanime, Setlistanime] = useState(listMedia);
     const [currentPage, SetcurrentPage] = useState(page);
     const [isClicked, setIsClicked] = useState(false);
@@ -21,7 +21,7 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
         // chan click ho den khi chay xong
         setIsClickPage(true);
         const url = `${typeURL}page=${pageNumber}&limit=${limit}`
-        const res = await fetch( url, {
+        const res = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
@@ -37,44 +37,45 @@ const ListAnime = ({ listMedia, totalPages ,typeURL,limit ,page}: ListAnimeProp)
             }
         }, 100);
         // Cho click button hoat dong lai
-         setIsClickPage(false);
+        setIsClickPage(false);
     }
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isClicked) {
-      e.preventDefault();
-      return;
-    }
+            e.preventDefault();
+            return;
+        }
         setIsClicked(true);
     }
     return (
-        <div id="scroll-root" className=" mt-5 px-2 text-white min-h-screen">
-            <div className="grid grid-cols-3 gap-4 md:grid-cols-5 py-2 overflow-hidden ">
+        <div id="scroll-root" className="px-2 text-white min-h-screen">
+            <div className=" grid grid-cols-2 md:grid-cols-4 gap-4 lg:grid-cols-6  py-2 overflow-hidden ">
                 {listanime.map((e: Media) => (
-                    <Link href={`/info/${e.slug}`} onClick={handleClick}
-                     className={` flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative`} key={e.slug}>
-                        <Image
-                            src={e.coverImage}
-                            alt="Movie Cover"
-                            width={200}
-                            height={300}
-                            style={{ height: "auto" }}
-                            loading="eager"
-                            className="rounded-lg object-cover aspect-2/3"
-                        />
+                    <Link prefetch={false} href={`/info/${e.slug}-${e.anilistId}`} onClick={handleClick}
+                        className={` flex flex-col gap-2 cursor-pointer hover:brightness-75 group relative`} key={e.slug}>
+                        <div className="relative w-full aspect-[2/3]">
+                            <Image
+                                src={e.anilistData.coverImage.large}
+                                alt={e.mappings[0].title || "Movie Cover"}
+                                fill
+                                sizes="(max-width: 400px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 16vw"
+                                priority
+                                className="object-cover rounded-lg"
+                            />
+                        </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-black/80 to-transparent" />
                         <div className="absolute bottom-0 left-0 w-full px-2 pb-2 bg-linear-to-t from-black/80 to-transparent">
                             <h3 className="text-white text-sm font-medium line-clamp-1 max-w-[90%]">
-                                {e.titleRomaji}
+                                {e.mappings[0].title}
                             </h3>
 
                             <span
                                 className="text-gray-300 text-xs line-clamp-1 mt-1 max-w-[90%]"
-                            > {e.description?.replace(/<[^>]*>?/gm, '')}</span>
+                            > {e.mappings[0].description?.replace(/<[^>]*>?/gm, '')}</span>
                         </div>
                     </Link>
                 ))}
             </div>
-            <Pagination LastPage={totalPages} onPageChange={onPageChange} currentPage={currentPage} />
+            {/* <Pagination LastPage={totalPages} onPageChange={onPageChange} currentPage={currentPage} /> */}
         </div>
     )
 }

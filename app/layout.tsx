@@ -2,10 +2,23 @@ import type { Metadata } from "next";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { Inter, Montserrat, Geist } from 'next/font/google'
-const inter = Inter({ subsets: ['latin','vietnamese'], variable: '--font-inter' })
-const montserrat = Montserrat({ subsets: ['latin','vietnamese'], variable: '--font-montserrat' })
+import Providers from "./Provider";
+import {Roboto } from 'next/font/google'
+const roboto = Roboto({ 
+  weight: ['400', '500', '700'], // BẮT BUỘC phải chọn weight đối với Roboto
+  subsets: ['latin', 'vietnamese'], 
+});
 import "./globals.css";
+import MainLayoutWrapper from "@/components/layout/MainLayout";
+import { cookies } from "next/headers";
+import { decodeTokenServer } from "@/helper/decodejwt";
+async function getUserInfo() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('refreshToken')?.value
+  const user = token ? decodeTokenServer(token) : null;
+  return user;
+  
+}
 
 export const metadata: Metadata = {
   title: "BMovie",
@@ -17,18 +30,19 @@ export const metadata: Metadata = {
     }
   ]
 };
-
-export default function RootLayout({
+export default async function  RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+    const user = await getUserInfo();
   return (
     <html
       lang="en">
-      <body className={`${inter.variable} ${montserrat.variable} font-sans`} >
-        {children}
+      <body  className = {`${roboto.className}`}>
+          <Providers>
+                <MainLayoutWrapper user = {user}>{children}</MainLayoutWrapper>
+          </Providers>
         <Analytics />
         <SpeedInsights />
       </body>

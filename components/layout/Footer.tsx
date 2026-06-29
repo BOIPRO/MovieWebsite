@@ -1,7 +1,7 @@
 import Image from 'next/image'
 const Footer = () => {
   return (
-    <div className="text-white/80 max-w-[1200px] mx-auto">
+    <div className="text-white/80 max-w-[1500px] mx-auto">
       <div className="w-full mt-5">
         <div className='flex items-center border-b max-w-[150px]'>
           <Image

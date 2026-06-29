@@ -18,7 +18,7 @@ export default function VideoPlayer({ url }: Prop) {
               <div className="w-full h-full bg-[#0b0e14] rounded-full"></div>
             </div>
           </div>
-          
+            
           <p className="mt-3 text-[11px] font-medium tracking-widest text-slate-500 uppercase animate-pulse">
             Đang tải trình phát...
           </p>
@@ -26,7 +26,7 @@ export default function VideoPlayer({ url }: Prop) {
       ) }
          <div className="flex justify-center aspect-video">
           <iframe
-            src={`${process.env.NEXT_PUBLIC_STREAM_URL}${url}`}
+            src={`${url}`}
             allowFullScreen
             loading="lazy"
             className={` absolute inset-0 w-full aspect-video transition-all duration-500 ease-in-out ${

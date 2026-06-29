@@ -4,6 +4,10 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "@/components/ui/button"
+import { usePathname } from 'next/navigation';
+import Navbar from '@/components/layout/NavBar';
+import Footer from '@/components/layout/Footer';
+import '@/app/globals.css'; // Global styles của bạn
 import {
     Card,
     CardAction,
@@ -40,7 +44,7 @@ const Login = () => {
                 credentials: 'include'
             });
             if (res.ok) 
-                router.push('/home');
+                router.push('/');
             else {
                 const data = await res.json();
                 Seterror(data.message || "Dang nhap that bai");
@@ -101,7 +105,7 @@ const Login = () => {
                     <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
                         Dang nhap
                     </Button>
-                    <Link href={'/home'} className='w-full'>
+                    <Link href={'/'} className='w-full'>
                         <Button type="submit" className="w-full border-white/40 border text-white">
                             Quay ve trang chu
                         </Button>
