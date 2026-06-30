@@ -28,7 +28,11 @@ const page = async ({params} : Props) => {
       return (  
       <div className='max-w-[1350px]  mx-auto '>
         <div className='gap-2  xl:flex xl:h-[500px]'>
-           <VideoPlayer m3u8= {data} />
+          {data === '' ? 
+          <div className='flex-1 mx-auto text-center '>
+            <p>Chưa có phim thông cảm nhé hihi</p>
+          </div>
+           :  <VideoPlayer m3u8= {data} /> }
             <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumber={episodeNumber} />
         </div>
           
