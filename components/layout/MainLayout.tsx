@@ -16,7 +16,7 @@ export default function MainLayoutWrapper({user,children }: Props) {
   const isAuthPage = pathname === '/login' || pathname === '/register';
   return (
     <>
-      <main className="min-h-screen  font-extrabold  bg-[#010202] text-white">
+      <main className="min-h-screen w-screen  font-extrabold  bg-[#010202] text-white">
         {!isAuthPage && <NavBar user = {user} />}
         
         {children}

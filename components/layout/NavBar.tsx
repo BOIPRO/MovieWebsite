@@ -74,7 +74,7 @@ const NavBar = ({ user }: Prop) => {
     return (
         <nav className={`${isHomepage ? "xl:fixed" : "sticky"} sticky top-0 left-0 z-50  ${navbarBgClass} `}>
             <div className='w-screen  flex-row   '>
-                <section className='flex w-[1350px] px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
+                <section className='flex w-screen px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
                     <div className='flex xl:gap-5 '>
                         <button onClick={() => SetopenMenu(!openMenu)} className='xl:hidden text-[20px] cursor-pointer hover:text-menubutton'>
 
