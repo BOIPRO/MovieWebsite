@@ -32,9 +32,8 @@ async function getAnimes() {
      <Banner banners={data.banner} />
      <section className=' max-w-[1350px] mx-auto flex flex-col gap-8 z-30'>
          <AnimeSection text={"Anime nổi bật"} animes={data.trending} />
-        <AnimeSection text = {"Anime phổ biến"} animes={data.popularity} showMore = {true} />
-        <AnimeSection text = {"Anime năm 2026"} animes={data.animeOfTheYear} showMore = {true} />
-      
+        <AnimeSection text = {"Anime phổ biến"} href='/anime-pho-bien/trang-1' animes={data.popularity} showMore = {true} />
+        <AnimeSection text = {"Anime năm 2026"} href='/anime-trong-nam/trang-1' animes={data.animeOfTheYear} showMore = {true} />
     </section>
     </div>
    

@@ -8,13 +8,14 @@ interface TrendingProps {
   animes : AnimeType[]
   text : string,
   showMore?: boolean
+  href?: string
 }
-const AnimeSection = ({showMore ,animes,text }: TrendingProps) => {
+const AnimeSection = ({showMore ,animes,text, href }: TrendingProps) => {
   return (
     <div className="pt-2 px-2 flex flex-col gap-3">
       <div className="flex justify-between xl:justify-normal">
          <p className=" text-[20px]  py-3 font-semibold px-3 text-white">{text} </p>
-         {showMore ? <HoverButtonInverted /> : null}
+         {showMore ? <HoverButtonInverted href={href || "#"} /> : null}
       </div>
        
       <ScrollContainer className=" gap-5 flex flex-row  items-start overflow-x-auto  scrollbar-hide">

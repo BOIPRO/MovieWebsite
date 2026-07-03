@@ -1,9 +1,14 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-export default function HoverButtonInverted() {
+import Link from "next/link";
+interface HoverButtonProps {
+  href: string;
+}
+export default function HoverButtonInverted({ href }: HoverButtonProps) {
   return (
     <div className="flex items-center justify-start">
-      <button 
+      <Link 
+        href={href}
         className=" 
           group relative flex items-center justify-center 
           h-12 w-12 xl:h-8 xl:w-8  hover:w-34 
@@ -37,7 +42,7 @@ export default function HoverButtonInverted() {
         >
             <FontAwesomeIcon icon={faChevronRight} />
         </span>
-      </button>
+      </Link>
     </div>
   );
 }

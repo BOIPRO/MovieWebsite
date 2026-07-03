@@ -1,0 +1,26 @@
+import ListAnime from "@/components/common/ListAnime"
+
+type Props = {
+  params: {
+    page: string
+  }
+}
+const Page = async ({ params }: Props) => {
+  const { page } = await params;
+  const pageNumber = parseInt(page.replace('trang-', ''), 10);
+  const dataAnime = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/anime-trong-nam?page=${pageNumber}&limit=30`, { next: { revalidate: 86400 } })
+const data = await dataAnime.json()
+  return (
+    <div>
+      <ListAnime
+        media={data.media}
+        totalPages={data.totalPages}
+        page={pageNumber}
+        route="/anime-trong-nam"
+      />
+      {/* Render danh sách phim */}
+    </div>
+  )
+}
+
+export default Page

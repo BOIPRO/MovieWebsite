@@ -1,11 +1,11 @@
 "use client"
-
+import Link from "next/link";
 interface pageProps {
+    route: string;
     LastPage: number;
-    onPageChange: (pageNumber: number) => void;
     currentPage: number
 }
-const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
+const Pagination = ({ route, LastPage, currentPage }: pageProps) => {
     const page: number[] = [];
     const offset: number = 2;
     const start = Math.max(2, currentPage - offset);
@@ -14,40 +14,21 @@ const Pagination = ({ LastPage, onPageChange, currentPage }: pageProps) => {
         page.push(i);
     }
     return (
-        <div className={`flex gap-4 flex-row justify-center  py-5 text-[16px] sm:text-base  items-center ${LastPage === 0 ? "hidden" : null}`}>
-            <button className={` w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${currentPage === 1 ? 'hidden' : null} `} disabled={1 === currentPage}
-                onClick={() => onPageChange(currentPage - 1)}
+        <div className={`flex  gap-4 flex-wrap justify-center  py-5 text-[16px] sm:text-base  items-center ${LastPage === 0 ? "hidden" : null}`}>
+            <Link href={`${route}/trang-1`} key={1} className={` h-[40px] px-2 flex justify-center items-center  text-nowrap cursor-pointer border-white/20 border-[0.2px] ${1 === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`}
             >
-                &lt;
-            </button>
-            <button key={1} className={` w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${1 === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} disabled={1 === currentPage}
-                onClick={() => onPageChange(1)}
-            >
-                1
-            </button>
-            {currentPage - 2 > 2 ? <div className="cursor-pointer">
-                ...
-            </div> : null}
+                Trang Đầu
+            </Link>
             {page.map((e: number) => (
-                <button key={e} className={` w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${e === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} disabled={e === currentPage}
-                    onClick={() => onPageChange(e)}
+                <Link href={`${route}/trang-${e}`} key={e} className={` w-[40px] px-2  flex justify-center items-center  aspect-square cursor-pointer  border-white/20 border-[0.2px] ${e === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`}
                 >
                     {e}
-                </button>
+                </Link>
             ))}
-            {currentPage + 2 < LastPage ? <div className="cursor-pointer">
-                ...
-            </div> : null}
-            <button key={LastPage === 1 ? 0 : LastPage} className={`w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === 1 ? "hidden" : null}  ${LastPage === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} disabled={LastPage === currentPage}
-                onClick={() => onPageChange(LastPage)}
+            <Link href={`${route}/trang-${LastPage === 1 ? 0 : LastPage}`} key={LastPage === 1 ? 0 : LastPage} className={`h-[40px]  flex justify-center items-center  px-2 cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === 1 ? "hidden" : null}  ${LastPage === currentPage ? "bg-amber-600" : "hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-200"}`} 
             >
-                {LastPage}
-            </button>
-            <button className={` w-[50px] aspect-square cursor-pointer rounded-sm border-white/20 border-[0.2px] ${LastPage === currentPage ? 'hidden' : null} `} disabled={LastPage === currentPage}
-                onClick={() => onPageChange(currentPage + 1)}
-            >
-                &gt;
-            </button>
+                Trang Cuối
+            </Link>
         </div>
     )
 }
