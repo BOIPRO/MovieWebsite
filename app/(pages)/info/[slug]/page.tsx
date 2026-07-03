@@ -1,7 +1,7 @@
 import InfoAnime from "@/app/(pages)/info/[slug]/InfoAnime";
 import { Episode } from "@/types/episode";
 import ListEpsiodes from "@/components/common/ListEpisodes";
-import WatchNow from "./WatchNow";
+import WatchNow from "@/components/common/WatchNow";
 import { Anime } from "@/types/anime";
 type Props = {
   params: {

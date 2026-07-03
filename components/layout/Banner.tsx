@@ -23,21 +23,24 @@ export default function Banner({ banners }: BannerProps) {
         effect={'fade'}
         fadeEffect={{ crossFade: true }}
         centeredSlides={true}
-        loop={true} 
+        loop={true}
+        observer={true}
+        observeParents={true}
         watchSlidesProgress={true} // Chỉ tính toán tiến trình cho slide trong tầm nhìn
         updateOnWindowResize={true} // Cập nhật mượt mà khi co giãn cửa sổ
         resizeObserver={true} // Sử dụng ResizeObserver hiện đại của trình duyệt thay vì hàm resize Javascript cũ
-        
+        preventClicks={true}
+        preventClicksPropagation={false}
         autoplay={{
-          delay: 20000, 
+          delay: 20000,
           disableOnInteraction: false,
         }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className="w-full h-full"
       >
         {banners.map((banner) => (
-          <SwiperSlide key={`main-${banner._id}`}>
-            {({ isActive}) => (
+          <SwiperSlide key={`main-${banner.anilistId}-${banner.firstEpisode}`}>
+            {({ isActive }) => (
               <BannerItem banner={banner} isActive={!!isActive} />
             )}
           </SwiperSlide>
@@ -45,10 +48,10 @@ export default function Banner({ banners }: BannerProps) {
       </Swiper>
       <div className=" absolute bottom-8 left-1/2 -translate-x-1/2 z-30 w-full max-w-[1000px] px-5 hidden xl:block">
         <Swiper
-          onSwiper={setThumbsSwiper} 
-          loop={true} 
-          spaceBetween={12} 
-          slidesPerView={5} 
+          onSwiper={setThumbsSwiper}
+          loop={true}
+          spaceBetween={12}
+          slidesPerView={5}
           watchSlidesProgress={true}
           modules={[Thumbs]}
           className="thumbs-swiper"

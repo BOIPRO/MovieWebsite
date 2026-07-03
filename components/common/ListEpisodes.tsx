@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { Episode } from '@/types/episode';
 import { usePathname } from "next/navigation";
-import WatchNow from "@/app/(pages)/info/[slug]/WatchNow";
+import WatchNow from "@/components/common/WatchNow";
 interface Prop {
     listEpisode : Episode[],
     slug : string

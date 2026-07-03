@@ -7,6 +7,8 @@ import Banner from '@/components/layout/Banner';
 export type BannerType = Pick<Anime,'_id' | 'anilistId'> & {
   anilistData : Pick<Anime['anilistData'],'seasonYear' | 'averageScore' | 'bannerImage' | 'trailer' | 'coverImage'>,
   title : string,
+  slug : string,
+  firstEpisode : string
 } 
 export type AnimeType = Pick<Anime,'_id' | 'anilistId' | 'slug'> & {
   anilistData : Pick<Anime['anilistData'],'seasonYear' | 'averageScore' | 'coverImage'|'season'|'trending'>

@@ -5,6 +5,7 @@ import { BannerType } from "@/app/page";
 import { faStar, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import VideoPlayer from "@/app/(pages)/stream/[slug]/VideoPlayer";
+import WatchNow from "../common/WatchNow";
 
 interface Props {
     banner: BannerType,
@@ -41,7 +42,6 @@ export default function BannerItem({ banner, isActive }: Props) {
     }
 
     const bannerImg = banner.anilistData?.bannerImage || '/fallback.jpg';
-
     return (
         <section className="relative w-full h-[300px] sm:h-[400px] xl:h-full overflow-hidden text-white bg-black z-0">
             <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
@@ -61,26 +61,14 @@ export default function BannerItem({ banner, isActive }: Props) {
                     </div>
                 )}
             </div>
-
-            {/* LỚP PHỦ GRADIENT ĐA TẦNG: Giúp vùng chứa chữ ở đáy cực kỳ tối, chữ trắng nổi bần bật không sợ bị lóa */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent xl:bg-gradient-to-r xl:from-[#0c151abc] xl:via-[#0c151a13]/60 xl:to-transparent z-10 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0b1317] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-0 max-w-[1350px] mx-auto px-4 flex flex-col justify-end pb-6 xl:justify-center xl:pb-0 z-20 ">
 
-            {/* KHUNG THÔNG TIN CHỮ VÀ NÚT BẤM (NẰM ĐÈ LÊN TRÊN NỀN Ở ĐÁY) */}
-            <div className="absolute inset-0 max-w-[1350px] mx-auto px-4 flex flex-col justify-end pb-6 xl:justify-center xl:pb-0 z-20 pointer-events-none">
-
-                <div className="pointer-events-auto flex flex-col items-center xl:items-start text-center xl:text-left w-full">
-
-                    {/* FIX TRÀN TIÊU ĐỀ: 
-                        - Trên mobile hạ xuống text-xl hoặc text-2xl (thay vì text-3xl đồ sộ).
-                        - Thêm line-clamp-2: Nếu tên quá dài (như phim Long Chúa Vũ) chỉ hiển thị tối đa 2 dòng rồi tự động thêm dấu ba chấm (...), không bao giờ đè lên phần khác.
-                        - drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]: Đổ bóng chữ dày chống lóa.
-                    */}
+                <div className="flex flex-col items-center xl:items-start text-center xl:text-left w-full">
                     <h1 className="text-xl md:text-4xl xl:text-5xl font-black max-w-[650px]  tracking-wide line-clamp-2 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] px-2 xl:px-0">
                         {banner.title}
                     </h1>
-
-                    {/* HẠ CỠ CHỮ THÔNG TIN TRÊN MOBILE XUỐNG TEXT-[12px] CHO GỌN GÀNG */}
                     <div className="flex flex-wrap items-center justify-center xl:justify-start gap-2 mt-2 text-[12px] md:text-[15px] font-medium text-zinc-300">
                         <span className="bg-blue-600 px-1.5 py-0.5 rounded font-black text-white flex items-center gap-1 scale-95 origin-center">
                             <FontAwesomeIcon icon={faStar} className="text-amber-400 w-3 h-3" />
@@ -94,17 +82,18 @@ export default function BannerItem({ banner, isActive }: Props) {
                         <span>•</span>
                         <span>Nhật Bản</span>
                     </div>
-
-                    {/* THU GỌN KÍCH THƯỚC NÚT BẤM TRÊN MOBILE */}
-                    <div className="flex items-center justify-center xl:justify-start mt-4">
-                        <a
+                    <div className="flex items-center justify-center xl:justify-start mt-4 z-100">
+                        {/* <a
+                            href={`/stream/${banner.slug}-${banner.anilistId}-${banner.firstEpisode}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-2 md:px-8 md:py-3 rounded-full flex items-center gap-2 transition transform active:scale-95 xl:hover:scale-105 shadow-md shadow-blue-600/20 cursor-pointer text-[14px] md:text-[16px]"
+                            className="bg-blue-600 hover:bg-blue-100 text-white font-bold px-6 py-2 md:px-8 md:py-3 rounded-full flex items-center gap-2 transition transform active:scale-95 xl:hover:scale-105 shadow-md shadow-blue-600/20 cursor-pointer text-[14px] md:text-[16px]"
                         >
                             <FontAwesomeIcon icon={faPlay} className="w-3 h-3 md:w-4 md:h-4" />
                             Xem ngay
-                        </a>
+                        </a> */}
+
+                        <WatchNow firstEpisodeUrl={`/stream/${banner.slug}-${banner.anilistId}-${banner.firstEpisode}`} />
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ interface Prop {
     firstEpisodeUrl : string
 }
 export default function WatchNow({firstEpisodeUrl} : Prop) {
+    console.log("firstEpisodeUrl:", firstEpisodeUrl); // Log để kiểm tra giá trị của firstEpisodeUrl
     const router = useRouter();
     const [isClicked, setIsClicked] = useState(false);
      const handleWatchNow = () => {
