@@ -46,7 +46,7 @@ const ListEpsiodes = ({ episodeNumber, listEpisode,slug}: Prop) => {
             {
                 listEpisode && listEpisode.length > 0 && pathname.includes("/info") ? <WatchNow firstEpisodeUrl={`/stream/${slug}-${listEpisode[0].episodeSlug}`} /> : null
             }
-            <div className=' xl:h-full flex-1 px-5 bg-black rounded-lg text-white'>
+            <div className=' xl:h-full flex-1 px-5 bg-black rounded-lg z-10 text-white'>
                 <p className='py-2 text-[16px] shrink-0'>Danh sách tập</p>
                 <div ref={scrollRef} onScroll={handleScroll} className={` max-h-[450px]  grid grid-cols-5 lg:grid-cols-12 ${ pathname.includes("/info") ?  "xl:grid-cols-12" : "xl:grid-cols-5"} overflow-x-hidden overflow-y-auto scrollbar-custom gap-3 text-center text-[16px] `}>
                 {(!listEpisode || listEpisode.length === 0) ? (

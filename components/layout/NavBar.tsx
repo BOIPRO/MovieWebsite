@@ -19,6 +19,7 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import AdvancedSearchModal from '../common/AdvancedSearch'
 interface Prop {
     user: {
         username: string
@@ -73,6 +74,7 @@ const NavBar = ({ user }: Prop) => {
         : 'bg-black/80 backdrop-blur-md text-white shadow-md';
     return (
         <nav className={`${isHomepage ? "xl:fixed" : "sticky"} sticky top-0 left-0 z-50  ${navbarBgClass} `}>
+            <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
             <div className='w-screen  flex-row   '>
                 <section className='flex w-screen px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
                     <div className='flex xl:gap-5 '>
