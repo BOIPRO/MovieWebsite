@@ -62,7 +62,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
         // Debounce: Chờ 300ms sau khi người dùng ngừng gõ mới gọi API
         const delayDebounceFn = setTimeout(async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/suggest?q=${encodeURIComponent(searchTerm)}`);
+                const response = await fetch(`/api/bemovie/movies/suggest?q=${encodeURIComponent(searchTerm)}`);
                 const data: ResponseSuggest[] = await response.json();
                 setResults(data);
             } catch (error) {
@@ -98,7 +98,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute top-{topPosition}px z-1000 left-0 right-0 overflow-hidden h-screen bg-black/80 flex justify-center items-center p-10 pt-2  cursor-pointer"
+                className="absolute top-{topPosition}px z-1000 left-0 right-0 overflow-hidden h-screen bg-black/80 flex  justify-center items-center p-10  cursor-pointer"
                 onClick={onClose}
             >
                 {/* Container chính của khung tìm kiếm, ngăn sự kiện đóng khi click vào */}
@@ -135,7 +135,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                     </div>
 
                     {/* Phần Body: Danh sách gợi ý + Khung xem trước */}
-                    <div className="flex h-[450px]">
+                    <div className="flex h-[300px] xl:h-[450px]">
 
                         {/* Cột bên trái: Danh sách kết quả (Dropdown content) */}
                         <div className="scrollbar-hide w-2/5 border-r border-gray-700 p-4 space-y-2 overflow-y-auto">

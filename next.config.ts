@@ -9,8 +9,16 @@ const nextConfig: NextConfig = {
         hostname: 's4.anilist.co',
         port: '',
         pathname: '/file/anilistcdn/**',
-      },
+      },  
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/bemovie/:path*',
+        destination: 'https://bemovie-737r.onrender.com/:path*',
+      },
+    ];
   },
 };
 
