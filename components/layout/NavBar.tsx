@@ -91,9 +91,15 @@ const NavBar = ({ user }: Prop) => {
                                 style={{ width: '75px', height: 'auto' }} />
                             <p className='xl:text-[30px] text-[25px]'>BMovie</p>
                         </div>
-                        <div className="hidden xl:flex items-center text-gray-200 z-500">
+                        <div className="hidden xl:flex gap-5 items-center text-gray-200 z-500">
                             <Link href={'/'} className='flex gap-2 items-center cursor-pointer hover:text-blue-600'>
                                 <p>Trang Chủ</p>
+                            </Link>
+                            <Link href={'/anime-pho-bien/trang-1'} className='flex gap-2 items-center cursor-pointer hover:text-blue-600'>
+                                <p>Anime Phổ Biến</p>
+                            </Link>
+                              <Link href={'/anime-trong-nam/trang-1'} className='flex gap-2 items-center cursor-pointer hover:text-blue-600'>
+                                <p>Anime Trong Năm</p>
                             </Link>
                         </div>
                     </div>
@@ -125,8 +131,11 @@ const NavBar = ({ user }: Prop) => {
                             <Link href={'/'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
                                 Trang Chủ
                             </Link>
-                            <Link href={'/phim-le'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
-                                Phim Lẻ
+                            <Link href={'/anime-pho-bien/trang-1'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
+                                Anime phổ biến
+                            </Link>
+                             <Link href={'/anime-trong-nam/trang-1'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
+                                Anime trong năm
                             </Link>
                         </nav>
                     </div>

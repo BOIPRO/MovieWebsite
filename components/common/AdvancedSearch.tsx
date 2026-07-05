@@ -111,7 +111,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                 >
 
                     {/* Phần Header: Thanh tìm kiếm + Nút Advanced Search */}
-                    <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+                    <div className="p-4  flex  items-center justify-between">
                         <div className="flex-grow relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <SearchIcon />
@@ -138,7 +138,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                     <div className="flex h-[300px] xl:h-[450px]">
 
                         {/* Cột bên trái: Danh sách kết quả (Dropdown content) */}
-                        <div className="scrollbar-hide w-2/5 border-r border-gray-700 p-4 space-y-2 overflow-y-auto">
+                        <div className="scrollbar-hide w-2/5  p-4 space-y-2 overflow-y-auto">
                             {results.map((item, index) => (
                                 <div
                                     key={item._id}
@@ -149,7 +149,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                         <Image src={item.anilistData.coverImage.large} alt={item.title[0]} fill sizes="100px" className="rounded object-cover" />
                                     </div>
                                     <div className="flex-grow">
-                                        <h4 className="text-white text-sm font-medium leading-tight">{item.title}</h4>
+                                        <h4 className="text-white text-sm font-medium leading-tight line-clamp-2">{item.title}</h4>
                                         {/* {item.isSpecial && <p className="text-blue-400 text-xs mt-1">Xem chi tiết</p>} */}
                                     </div>
                                     {/* {item.isSpecial && <ChevronRight />} */}
@@ -172,7 +172,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                                 className="rounded-lg object-contain"
                                             />
                                         </div>
-                                        <h2 className="text-white text-[16px] font-bold text-center leading-tight">{selectedResult.title[0]}</h2>
+                                        <h2 className="text-white text-[16px] font-bold text-center leading-tight line-clamp-2">{selectedResult.title[0]}</h2>
                                         <p className="text-gray-400 text-sm ">
                                             {selectedResult.anilistData.seasonYear}
                                         </p>
