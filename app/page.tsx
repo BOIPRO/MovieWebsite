@@ -1,6 +1,4 @@
 import AnimeSection from './AnimeSection'
-import ListAnime from '@/components/common/ListAnime';
-import HoverButton from '@/components/ui/HoverButton';
 import { Anime } from '@/types/anime';
 import Banner from '@/components/layout/Banner';
 // ISR
@@ -24,9 +22,9 @@ interface ResponseType {
 
 }
 export const revalidate = 600
+const res = await fetch(`${process.env.API_URL}/movies/home`);
+const data : ResponseType = await res.json()
 async function getAnimes() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/home`);
-  const data : ResponseType = await res.json()
   return (
     <div className='w-screen'>
      <Banner banners={data.banner} />

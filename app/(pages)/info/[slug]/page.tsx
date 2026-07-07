@@ -7,12 +7,17 @@ type Props = {
     slug: string
   }
 }
+export const revalidate = 300
 const Page = async ({ params } : Props) => {
     const {slug} = await params;
    const id = String(slug.split('-').pop());
     const [resInfo,resEpisode] = await Promise.all([
-       fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/info?id=${id}`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${id}`),
+       fetch(`${process.env.API_URL}/movies/info?id=${id}`,{
+        next: { revalidate: 300, tags: [`anime-info-${id}`] }
+       }),
+      fetch(`${process.env.API_URL}/movies/episodes?id=${id}`,{
+        next: { revalidate: 300, tags: [`anime-info-${id}`] }
+      }),
     ])
    
     const infoAnime : Anime[] = await resInfo.json();

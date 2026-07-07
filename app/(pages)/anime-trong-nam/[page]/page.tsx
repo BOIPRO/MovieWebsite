@@ -5,10 +5,11 @@ type Props = {
     page: string
   }
 }
+export const revalidate = 600
 const Page = async ({ params }: Props) => {
   const { page } = await params;
   const pageNumber = parseInt(page.replace('trang-', ''), 10);
-  const dataAnime = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/anime-trong-nam?page=${pageNumber}&limit=30`, { next: { revalidate: 86400 } })
+  const dataAnime = await fetch(`${process.env.API_URL}/movies/anime-trong-nam?page=${pageNumber}&limit=30`, { next: { revalidate: 600 } })
 const data = await dataAnime.json()
   return (
     <div>

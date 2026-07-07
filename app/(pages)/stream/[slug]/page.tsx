@@ -21,7 +21,7 @@ const page = async ({params} : Props) => {
     const episodeNumber = match2 ? match2[1] : null!;
     const [resdata,resEpisode] = await Promise.all([
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`,{cache : 'no-store'}),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${anilistId}`,{ next: { revalidate: 86400 } })
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/episodes?id=${anilistId}`,{ next: { revalidate: 300 } })
     ])
     const listEpisode : Episode[] = await resEpisode.json()
     const data = await resdata.text()
