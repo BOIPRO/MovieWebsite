@@ -8,6 +8,7 @@ export interface MappingsAnimeVietSub {
 export interface Anime {
     _id : string,
     slug : string,
+    currentEpisode : string,
     anilistData : {
         title : {
             romaji : string,

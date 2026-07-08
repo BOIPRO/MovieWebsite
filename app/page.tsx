@@ -12,6 +12,7 @@ export type AnimeType = Pick<Anime,'_id' | 'anilistId' | 'slug'> & {
   anilistData : Pick<Anime['anilistData'],'seasonYear' | 'averageScore' | 'coverImage'|'season'|'trending'>
 } & {
   mappings : Pick<Anime['mappings'][number],'title'>[]
+  currentEpisode : string
 }
 
 interface ResponseType {
@@ -19,6 +20,7 @@ interface ResponseType {
   trending : AnimeType[],
   popularity : AnimeType[],
   animeOfTheYear : AnimeType[]
+  animeReleasing : AnimeType[]
 
 }
 export const revalidate = 600
@@ -30,6 +32,7 @@ async function getAnimes() {
      <Banner banners={data.banner} />
      <section className=' max-w-[1350px] mx-auto flex flex-col gap-8 z-30'>
          <AnimeSection text={"Anime nổi bật"} animes={data.trending} />
+           <AnimeSection text={"Anime đang chiếu"} animes={data.animeReleasing} />
         <AnimeSection text = {"Anime phổ biến"} href='/anime-pho-bien/trang-1' animes={data.popularity} showMore = {true} />
         <AnimeSection text = {"Anime năm 2026"} href='/anime-trong-nam/trang-1' animes={data.animeOfTheYear} showMore = {true} />
     </section>

@@ -12,7 +12,7 @@ interface ListAnimeProp {
     page: number,
     route: string
 }
-const ListAnime = ({ media, totalPages,page, route }: ListAnimeProp) => {
+const ListAnime = ({ media, totalPages, page, route }: ListAnimeProp) => {
     const [isClicked, setIsClicked] = useState(false);
     const [mediaList, setMediaList] = useState<AnimeType[]>(media);
     useEffect(() => {
@@ -29,7 +29,7 @@ const ListAnime = ({ media, totalPages,page, route }: ListAnimeProp) => {
     }
     return (
         <div id="scroll-root" className="px-2 text-white max-w-[1350px] mx-auto min-h-screen">
-              <Pagination route={route} LastPage={totalPages}  currentPage={page} />
+            <Pagination route={route} LastPage={totalPages} currentPage={page} />
             <div className=" grid grid-cols-3 md:grid-cols-4 gap-4 lg:grid-cols-6  py-2 overflow-hidden ">
                 {mediaList.map((e: AnimeType) => (
                     <Link prefetch={false} href={`/info/${e.slug}-${e.anilistId}`} onClick={handleClick}
@@ -43,6 +43,9 @@ const ListAnime = ({ media, totalPages,page, route }: ListAnimeProp) => {
                                 priority
                                 className="object-cover rounded-lg"
                             />
+                            <div className="absolute top-2 right-2 z-10 bg-blue-600 px-2 py-1 rounded text-white text-[16px] font-bold backdrop-blur-sm">
+                                {e.currentEpisode === "Full" ? "Full" : `Tập ${e.currentEpisode} `}
+                            </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-black/80 to-transparent" />
                         <div className="absolute bottom-0 left-0 w-full px-2 pb-2 bg-linear-to-t from-black/80 to-transparent">
@@ -53,7 +56,7 @@ const ListAnime = ({ media, totalPages,page, route }: ListAnimeProp) => {
                     </Link>
                 ))}
             </div>
-            <Pagination route={route} LastPage={totalPages}  currentPage={page} />
+            <Pagination route={route} LastPage={totalPages} currentPage={page} />
         </div>
     )
 }
