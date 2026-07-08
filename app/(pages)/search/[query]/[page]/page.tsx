@@ -10,7 +10,7 @@ export default async function Page({ params }: Props) {
   const { query,page } = await params;
   const limit = 30;
  const pageNumber = parseInt(page.replace('trang-', ''), 10);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/search?s=${query}&page=${pageNumber}&limit=${limit}`,{
+  const res = await fetch(`${process.env.API_URL}/movies/search?s=${query}&page=${pageNumber}&limit=${limit}`,{
     cache : "no-store"
   });
   const data = await res.json();

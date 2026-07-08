@@ -15,8 +15,8 @@ const Page = async ({ params } : Props) => {
        fetch(`${process.env.API_URL}/movies/info?id=${id}`,{
         next: { revalidate: 300, tags: [`anime-info-${id}`] }
        }),
-      fetch(`${process.env.API_URL}/movies/episodes?id=${id}`,{
-        next: { revalidate: 300, tags: [`anime-info-${id}`] }
+       fetch(`${process.env.API_URL}/movies/episodes?id=${id}`,{
+        next: { revalidate: 300, tags: [`anime-episode-${id}`] }
       }),
     ])
    

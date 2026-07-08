@@ -1,15 +1,14 @@
 import ListAnime from "@/components/common/ListAnime"
-
 type Props = {
   params: {
     page: string
   }
 }
-export const revalidate = 600
+export const revalidate =600
 const Page = async ({ params }: Props) => {
   const { page } = await params;
   const pageNumber = parseInt(page.replace('trang-', ''), 10);
-  const dataAnime = await fetch(`${process.env.API_URL}/movies/anime-pho-bien?page=${pageNumber}&limit=30`, { next: { revalidate: 600 } })
+  const dataAnime = await  fetch(`${process.env.API_URL}/movies/anime-pho-bien?page=${pageNumber}&limit=30`, { next: { revalidate: 600 } })
 const data = await dataAnime.json()
   return (
     <div>

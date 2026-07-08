@@ -1,5 +1,4 @@
 import ListAnime from "@/components/common/ListAnime"
-
 type Props = {
   params: {
     page: string

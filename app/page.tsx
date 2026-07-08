@@ -22,7 +22,7 @@ interface ResponseType {
 
 }
 export const revalidate = 600
-const res = await fetch(`${process.env.API_URL}/movies/home`);
+const res = await  fetch(`${process.env.API_URL}/movies/home`);
 const data : ResponseType = await res.json()
 async function getAnimes() {
   return (
