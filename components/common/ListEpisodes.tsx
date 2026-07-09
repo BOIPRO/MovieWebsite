@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { Episode } from '@/types/episode';
@@ -8,12 +8,11 @@ import WatchNow from "@/components/common/WatchNow";
 interface Prop {
     listEpisode : Episode[],
     slug : string
-    episodeNumber?: string
+    episodeNumberClicked?: string
 }
-const ListEpsiodes = ({ episodeNumber, listEpisode,slug}: Prop) => {
+const ListEpsiodes = ({listEpisode,slug,episodeNumberClicked}: Prop) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
-    const router = useRouter();
     useEffect(() => {
         if (pathname.includes("/info") && scrollRef.current) {
             scrollRef.current.scrollTop = 0;
@@ -62,7 +61,7 @@ const ListEpsiodes = ({ episodeNumber, listEpisode,slug}: Prop) => {
                                     <Link
                                     prefetch = {false}
                                         href={`/stream/${slug}-${e.episodeSlug}`}
-                                        className={episodeNumber ? `${formatEpisodeNumber(episodeNumber) === formatEpisodeNumber(e.episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-neutral-900"} px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500` :
+                                        className={episodeNumberClicked ? `${formatEpisodeNumber(episodeNumberClicked) === formatEpisodeNumber(e.episodeNumber) ? 'bg-blue-500 cursor-not-allowed pointer-events-none' : "bg-neutral-900"} px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500` :
                                             "bg-neutral-900 px-2 py-2 rounded-sm cursor-pointer my-auto  hover:bg-blue-500"}
                                             key={e.episodeSlug}
                                     >

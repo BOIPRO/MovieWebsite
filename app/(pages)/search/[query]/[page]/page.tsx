@@ -1,4 +1,4 @@
-import { AnimeType } from "@/app/page";
+import { AnimeResponeType } from "@/types/anime";
 import ListAnime from "@/components/common/ListAnime";
 type Props = {
   params: {
@@ -14,7 +14,7 @@ export default async function Page({ params }: Props) {
     cache : "no-store"
   });
   const data = await res.json();
-  const listMedia : AnimeType[] = data.media;
+  const listMedia : AnimeResponeType[] = data.media;
   const totalPages = data.totalPages;
   return (
     <section className={`max-w-[1350px] mx-auto `}>

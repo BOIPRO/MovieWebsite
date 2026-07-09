@@ -1,26 +1,15 @@
 import AnimeSection from './AnimeSection'
-import { Anime } from '@/types/anime';
+import { AnimeResponeType } from '@/types/anime';
+import  {BannerType} from "@/types/banner"
 import Banner from '@/components/layout/Banner';
 // ISR
-export type BannerType = Pick<Anime,'_id' | 'anilistId'> & {
-  anilistData : Pick<Anime['anilistData'],'seasonYear' | 'averageScore' | 'bannerImage' | 'trailer' | 'coverImage'>,
-  title : string,
-  slug : string,
-  firstEpisode : string
-} 
-export type AnimeType = Pick<Anime,'_id' | 'anilistId' | 'slug'> & {
-  anilistData : Pick<Anime['anilistData'],'seasonYear' | 'averageScore' | 'coverImage'|'season'|'trending'>
-} & {
-  mappings : Pick<Anime['mappings'][number],'title'>[]
-  currentEpisode : string
-}
 
 interface ResponseType {
   banner : BannerType[],
-  trending : AnimeType[],
-  popularity : AnimeType[],
-  animeOfTheYear : AnimeType[]
-  animeReleasing : AnimeType[]
+  trending : AnimeResponeType[],
+  popularity : AnimeResponeType[],
+  animeOfTheYear : AnimeResponeType[]
+  animeReleasing : AnimeResponeType[]
 
 }
 export const revalidate = 600

@@ -6,12 +6,6 @@ type Props = {
     slug: string
   }
 }
-interface StreamingResponse {
-  url : string
-}
-const headers = {
-  'x-api-key': process.env.INTERNAL_API_KEY as string,
-};
 const page = async ({params} : Props) => {
     const {slug} = await params
     const regex = /(.*)-(\d+)-(tap-.*)$/; 
@@ -36,7 +30,7 @@ const page = async ({params} : Props) => {
             <p>Chưa có phim thông cảm nhé hihi</p>
           </div>
            :  <VideoPlayer m3u8= {data} /> }
-            <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumber={episodeNumber} />
+            <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumberClicked={episodeNumber} />
         </div>
           
       </div>

@@ -1,6 +1,5 @@
 export interface Episode {
+    _id :string,
     episodeNumber : string,
-    url : string,
-    anilistId : number,
     episodeSlug : string
 }

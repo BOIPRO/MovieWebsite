@@ -1,9 +1,9 @@
 import Image from "next/image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons"
-import { Anime } from "@/types/anime"
+import { AnimeDetailType } from "@/types/anime"
 interface Prop {
-  info: Anime
+  info: AnimeDetailType
 }
 const InfoAnime = ({ info }: Prop) => {
   return (
@@ -18,7 +18,7 @@ const InfoAnime = ({ info }: Prop) => {
         className="rounded-lg mx-auto lg:mx-0 object-cover aspect-3/4 xl:flex-2"
       />
       <div className="md:text-left text-center flex-4 flex flex-col gap-5 ">
-        <h1 className="text-white  text-[24px] font-semibold tracking-tight ">{info.mappings[0].title}</h1>
+        <h1 className="text-white  text-[24px] font-semibold tracking-tight ">{info.title}</h1>
         <h1 className="text-[20px]">{`${info.anilistData.title.romaji} ,${info.anilistData.title.english}`}</h1>
         <div className="flex flex-wrap justify-center gap-5 md:flex-col text-[16px]">
           <div className="flex items-center gap-1">
@@ -34,7 +34,7 @@ const InfoAnime = ({ info }: Prop) => {
             ))}
           </div>
         </div>
-        <div className="line-clamp-10 px-5 md:px-0 max-w-full text-[16px] text-white/50 text-left" dangerouslySetInnerHTML={{ __html: info.mappings[0].description }}></div>
+        <div className="line-clamp-10 px-5 md:px-0 max-w-full text-[16px] text-white/50 text-left" dangerouslySetInnerHTML={{ __html: info.description }}></div>
       </div>
     </div>
   )

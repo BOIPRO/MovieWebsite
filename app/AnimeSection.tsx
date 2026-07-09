@@ -2,10 +2,10 @@
 import Image from "next/image"
 import Link from "next/link";
 import ScrollContainer from 'react-indiana-drag-scroll';
-import { AnimeType } from "./page";
+import { AnimeResponeType } from "@/types/anime";
 import HoverButtonInverted from "@/components/ui/HoverButton";
 interface TrendingProps {
-  animes: AnimeType[]
+  animes: AnimeResponeType[]
   text: string,
   showMore?: boolean
   href?: string
@@ -19,7 +19,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
       </div>
 
       <ScrollContainer className=" gap-5 flex flex-row  items-start overflow-x-auto  scrollbar-hide">
-        {animes?.map((e: AnimeType) => (
+        {animes?.map((e: AnimeResponeType) => (
           <Link
             prefetch={false}
             href={`/info/${e.slug}-${e.anilistId}`}
@@ -44,7 +44,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
             </div>
 
             <p className="text-white text-[16px] font-semibold break-words w-full">
-              {e.mappings[0].title}
+              {e.title}
             </p>
           </Link>
         ))}
