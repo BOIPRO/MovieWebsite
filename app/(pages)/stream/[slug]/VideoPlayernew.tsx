@@ -41,13 +41,8 @@ class PNGTsLoader {
             ...callbacks,
             onSuccess: (response: any, stats: any, context: any, networkDetails: any) => {
                 context.type = 'fragment';
-                // response.data ở đây là file PNG
                 const rawBuffer = response.data;
-                console.log("Dang fetch seg")
-                // --- LOGIC BÓC TÁCH CỦA BẠN Ở ĐÂY ---
                 const cleanTsData = SliceData(rawBuffer);
-
-                // Trả lại buffer đã sạch cho hls.js
                 const modifiedResponse = {
                     ...response,
                     data: cleanTsData
@@ -75,7 +70,12 @@ export default function VideoPlayer({ m3u8 }: Prop) {
         const video = videoRef.current;
         const hls = new Hls({
             loader: PNGTsLoader as any,
-            debug: true,
+            debug: false,
+            maxBufferLength: 60,
+            // Tăng ngưỡng buffer bắt buộc trước khi phát để tránh giật
+            maxMaxBufferLength: 300,
+            // Tăng tốc độ tải dữ liệu
+            maxBufferSize: 60 * 1024 * 1024, // 60MB
 
         });
         hls.loadSource(blobUrl);
@@ -94,6 +94,6 @@ export default function VideoPlayer({ m3u8 }: Prop) {
         };
     }, [m3u8]);
 
-    return <video ref={videoRef} className='flex-[2] w-full h-full ' controls  />
+    return <video ref={videoRef} className='flex-[2] w-full h-full ' controls playsInline />
 
 }
