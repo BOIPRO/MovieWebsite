@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Thumbs } from 'swiper/modules';
-import { BannerType } from '@/app/page';
+import { BannerType } from '@/types/banner';
 import BannerItem from './BannerItem';
 import 'swiper/css';
 import 'swiper/css/pagination';

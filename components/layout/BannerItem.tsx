@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { BannerType } from "@/app/page";
+import { BannerType } from "@/types/banner";
 import { faStar, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import VideoPlayer from "@/app/(pages)/stream/[slug]/VideoPlayer";

@@ -7,12 +7,12 @@ export interface BannerType {
         }
         seasonYear :number,
         averageScore : number,
-        bannerImage : string
-    }
-    trailer : {
+        bannerImage : string,
+         trailer : {
         id : string,
         site : string,
         thumbnail : string
+    }
     }
     anilistId : number,
     title : string,
