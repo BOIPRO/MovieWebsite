@@ -1,4 +1,4 @@
-# BMovie - Nền tảng xem phim hiệu năng cao
+# BMovie - Nền tảng xem phim tích hợp nhiều nguồn
 
 <p align="center">
   <img src="public/images/BMovieDemo.png" width="600" alt="BMovie Homepage">
