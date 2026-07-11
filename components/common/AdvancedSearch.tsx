@@ -14,7 +14,7 @@ interface ResponseSuggest {
         },
         seasonYear: number,
     }
-    title: string[],
+    title: string,
 
 }
 // Icon tìm kiếm (dùng SVG đơn giản)
@@ -146,7 +146,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                     onMouseEnter={() => setSelectedIndex(index)}
                                 >
                                     <div className="relative w-12 h-16 flex-shrink-0 mr-3">
-                                        <Image src={item.anilistData.coverImage.large} alt={item.title[0]} fill sizes="100px" className="rounded object-cover" />
+                                        <Image src={item.anilistData.coverImage.large} alt={item.title} fill sizes="100px" className="rounded object-cover" />
                                     </div>
                                     <div className="flex-grow">
                                         <h4 className="text-white text-sm font-medium leading-tight line-clamp-2">{item.title}</h4>
@@ -165,14 +165,14 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                         <div className="relative w-48 aspect-square shadow-lg">
                                             <Image
                                                 src={selectedResult.anilistData.coverImage.large}
-                                                alt={selectedResult.title[0]}
+                                                alt={selectedResult.title}
                                                 fill
 
                                                 sizes="100px"
                                                 className="rounded-lg object-contain"
                                             />
                                         </div>
-                                        <h2 className="text-white text-[16px] font-bold text-center leading-tight line-clamp-2">{selectedResult.title[0]}</h2>
+                                        <h2 className="text-white text-[16px] font-bold text-center leading-tight line-clamp-2">{selectedResult.title}</h2>
                                         <p className="text-gray-400 text-sm ">
                                             {selectedResult.anilistData.seasonYear}
                                         </p>
