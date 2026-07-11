@@ -23,35 +23,38 @@ const Register = () => {
     const [error, Seterror] = useState("");
     const [showpassword, SetShowpassword] = useState(false)
     const [isPopup, setIsPopup] = useState(false)
-    const handlerUser  = (e: React.ChangeEvent<HTMLInputElement>) :void => {
+    const handlerUser = (e: React.ChangeEvent<HTMLInputElement>): void => {
         Setusername(e.target.value);
     }
-    const handleremail = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+    const handleremail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         Setemail(e.target.value);
     }
-    const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+    const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         Setpassword(e.target.value);
     }
-    const handlerShow = () : void => {
+    const handlerShow = (): void => {
         SetShowpassword(!showpassword)
     }
-    const isValidEmail = (email: string) : boolean => {
+    const isValidEmail = (email: string): boolean => {
         const regex =
             /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 
         return regex.test(email);
     }
-   
+
     const handlerSubmit = async () => {
         try {
             if (!isValidEmail(email) || username === "" || password === "") {
                 Seterror("Co loi xay ra vui long nhap lai")
                 return;
             }
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+            const res = await fetch(`/api/bemovie/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache',
+                    'Expires': '0',
                 },
                 body: JSON.stringify({
                     email: email,
@@ -80,10 +83,10 @@ const Register = () => {
 
     return (
         <div className="w-screen h-screen overflow-hidden flex items-center bg-neutral-950" >
-            {isPopup ? 
-        <VerifyCard email={"boibrohihi311@gmail.com"} />              
-            :   
-            
+            {isPopup ?
+                <VerifyCard email={"boibrohihi311@gmail.com"} />
+                :
+
                 <Card className="w-full max-w-sm mx-auto bg-neutral-900">
                     <CardHeader className='text-white'>
                         <CardTitle>Register</CardTitle>
@@ -135,11 +138,11 @@ const Register = () => {
                     </CardContent>
                     <CardFooter className="flex-col gap-2">
                         <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
-                            Dang ki
+                            Đăng kí
                         </Button>
                         <Link href={'/'} className='w-full'>
                             <Button type="submit" className="w-full border-white/40 border text-white">
-                                Quay ve trang chu
+                                Quay về trang chủ
                             </Button>
                         </Link>
                     </CardFooter>

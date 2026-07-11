@@ -4,9 +4,6 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "@/components/ui/button"
-import { usePathname } from 'next/navigation';
-import Navbar from '@/components/layout/NavBar';
-import Footer from '@/components/layout/Footer';
 import '@/app/globals.css'; // Global styles của bạn
 import {
     Card,
@@ -37,7 +34,7 @@ const Login = () => {
     }
     const handlerSubmit = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+            const res = await fetch(`/api/bemovie/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
@@ -60,10 +57,10 @@ const Login = () => {
         <div className="w-screen h-screen overflow-hidden flex items-center justify-around bg-neutral-950" >
             <Card className="w-full max-w-sm mx-auto bg-neutral-900">
                 <CardHeader className='text-white'>
-                    <CardTitle>Login</CardTitle>
+                    <CardTitle>Đăng nhập</CardTitle>
                     <CardAction>
                         <a href="register" className='hover:underline text-[16px]'>
-                            Register
+                            Đăng kí
                         </a>
                     </CardAction>
                 </CardHeader>
@@ -72,18 +69,18 @@ const Login = () => {
                         <div className="flex flex-col gap-6 text-white">
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="username">Username</Label>
+                                    <Label htmlFor="username">Tên đăng nhập</Label>
                                 </div>
                                 <Input onChange={(e) => handlerUser(e)} value={username} id="username" required className='text-white border-white/40' />
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label htmlFor="password">Mật khẩu</Label>
                                     <a
                                         href="#"
                                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                                     >
-                                        Forgot your password?
+                                        Quên mật khẩu?
                                     </a>
                                 </div>
                                 <div className="relative">
@@ -103,11 +100,11 @@ const Login = () => {
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
                     <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
-                        Dang nhap
+                        Đăng nhập
                     </Button>
                     <Link href={'/'} className='w-full'>
                         <Button type="submit" className="w-full border-white/40 border text-white">
-                            Quay ve trang chu
+                            Quay về trang chủ
                         </Button>
                     </Link>
                 </CardFooter>

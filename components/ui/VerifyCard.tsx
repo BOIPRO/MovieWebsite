@@ -32,7 +32,7 @@ const VerifyCard = ({ email }: Props) => {
         setTimeout(() => {
             setDisabled(false)
         }, 30000) // 30s
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend`, {
+    const res = await fetch(`/api/bemovie/auth/resend`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const VerifyCard = ({ email }: Props) => {
 }
 const handleVerification = async () => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify`, {
+        const res = await fetch(`api/bemovie/auth/verify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

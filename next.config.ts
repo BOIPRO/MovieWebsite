@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/bemovie/:path*',
-        destination: 'https://bemovie-737r.onrender.com/:path*',
+        destination: `${process.env.API_URL}/:path*`,
       },
     ];
   },
