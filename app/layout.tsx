@@ -11,13 +11,27 @@ const roboto = Roboto({
 import "./globals.css";
 import MainLayoutWrapper from "@/components/layout/MainLayout";
 import { cookies } from "next/headers";
-import { decodeTokenServer } from "@/helper/decodejwt";
-async function getUserInfo() {
-  const cookieStore = await cookies()
-  const token = cookieStore.get('refreshToken')?.value
-  const user = token ? decodeTokenServer(token) : null;
-  return user;
-  
+async function fetchAuthData() {
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.toString();
+
+  // 1. Gọi API Refresh để lấy accessToken mới
+  const refreshRes = await fetch(`${process.env.API_URL}/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Cookie': cookieString },
+  });
+
+  if (!refreshRes.ok) return { user: null, accessToken: null };
+  const { accessToken } = await refreshRes.json();
+  const userRes = await fetch(`${process.env.API_URL}/auth/me`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`, 
+    },
+  });
+
+  if (!userRes.ok) return { user: null, accessToken: null };
+  const user = await userRes.json();
+  return { user, accessToken };
 }
 
 export const metadata: Metadata = {
@@ -35,13 +49,13 @@ export default async function  RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const user = await getUserInfo();
+    const {user,accessToken} = await fetchAuthData();
   return (
     <html
       lang="en">
       <body  className = {`${roboto.className}`}>
           <Providers>
-                <MainLayoutWrapper user = {user}>{children}</MainLayoutWrapper>
+                <MainLayoutWrapper user = {user} accessToken = {accessToken} >{children}</MainLayoutWrapper>
           </Providers>
         <Analytics />
         <SpeedInsights />

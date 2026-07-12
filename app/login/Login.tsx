@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "@/components/ui/button"
-import '@/app/globals.css'; // Global styles của bạn
+import '@/app/globals.css';
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAuthStore } from '@/lib/services/useAuthStore'
 import {
     Card,
     CardAction,
@@ -17,12 +19,41 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from 'next/navigation'
+export interface LoginVariables {
+    username: string,
+    password: string
+}
 const Login = () => {
+    const [error, Seterror] = useState("")
+    const setAccessToken = useAuthStore(( state: any) => state.setAccessToken);
+    const router = useRouter();
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (userData: LoginVariables) => {
+            const response = await fetch(`/api/bemovie/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData),
+            })
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Lỗi không xác định");
+            }
+            return await response.json()
+        },
+        onSuccess: (data) => {
+            queryClient.setQueryData(['userProfile'], data.user); 
+            setAccessToken(data.accessToken);
+            router.push('/')
+        },
+        onError: (error) => {
+            Seterror(error.message);
+        }
+    }
+    )
     const [username, Setusername] = useState("")
     const [password, Setpassword] = useState("")
-    const [error, Seterror] = useState("")
     const [showpassword, SetShowpassword] = useState(false)
-    const router = useRouter();
     const handlerUser = (e: React.ChangeEvent<HTMLInputElement>) => {
         Setusername(e.target.value);
     }
@@ -32,27 +63,6 @@ const Login = () => {
     const handlerShow = () => {
         SetShowpassword(!showpassword)
     }
-    const handlerSubmit = async () => {
-        try {
-            const res = await fetch(`/api/bemovie/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include'
-            });
-            if (res.ok) 
-                router.push('/');
-            else {
-                const data = await res.json();
-                Seterror(data.message || "Dang nhap that bai");
-            }
-        } catch (error) {
-            console.log(error)
-            Seterror("Co loi xay ra, vui long thu lai")
-        }
-
-    }
-
     return (
         <div className="w-screen h-screen overflow-hidden flex items-center justify-around bg-neutral-950" >
             <Card className="w-full max-w-sm mx-auto bg-neutral-900">
@@ -99,8 +109,8 @@ const Login = () => {
                     </CardDescription>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
-                        Đăng nhập
+                    <Button onClick={() => mutate({ username: username, password: password })} type="submit" className="w-full bg-white text-black">
+                        {isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}
                     </Button>
                     <Link href={'/'} className='w-full'>
                         <Button type="submit" className="w-full border-white/40 border text-white">
