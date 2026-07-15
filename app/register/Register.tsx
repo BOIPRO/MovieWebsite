@@ -71,7 +71,6 @@ const Register = () => {
             else {
                 setIsPopup(true)
                 Seterror("")
-                Setemail("")
                 Setpassword("")
                 Setusername("")
             }
@@ -84,9 +83,8 @@ const Register = () => {
     return (
         <div className="w-screen h-screen overflow-hidden flex items-center bg-neutral-950" >
             {isPopup ?
-                <VerifyCard email={"boibrohihi311@gmail.com"} />
+                <VerifyCard email={email} />
                 :
-
                 <Card className="w-full max-w-sm mx-auto bg-neutral-900">
                     <CardHeader className='text-white'>
                         <CardTitle>Register</CardTitle>

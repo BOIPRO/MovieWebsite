@@ -1,8 +1,8 @@
 import Image from 'next/image'
 const Footer = () => {
   return (
-    <div className="text-white/80 max-w-[1500px] mx-auto">
-      <div className="w-full mt-5">
+    <div className="text-white/80 max-w-[1350px] mx-auto">
+      <div className=" mt-5">
         <div className='flex items-center border-b max-w-[150px]'>
           <Image
             src="/icons/BMovie.svg"

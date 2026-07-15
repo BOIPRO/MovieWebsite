@@ -19,6 +19,7 @@ interface Props {
     email: string
 }
 const VerifyCard = ({ email }: Props) => {
+    console.log(email)
     const router = useRouter();
     const [otpValue, setOtpValue] = useState("");
     const [error, Seterror] = useState("");

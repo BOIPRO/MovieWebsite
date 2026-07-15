@@ -12,8 +12,8 @@ interface TrendingProps {
 }
 const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
   return (
-    <div className="pt-2 px-2 flex flex-col gap-3">
-      <div className="flex justify-between xl:justify-normal">
+    <div className="pt-2">
+      <div className="flex justify-between xl:justify-normal pb-2">
         <p className=" text-[20px]  py-3 font-semibold px-3 text-white">{text} </p>
         {showMore ? <HoverButtonInverted href={href || "#"} /> : null}
       </div>
@@ -23,7 +23,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
           <Link
             prefetch={false}
             href={`/info/${e.slug}-${e.anilistId}`}
-            className="w-[200px] flex flex-col items-start gap-2 flex-none cursor-pointer hover:brightness-75"
+            className="lg:w-[200px] w-[150px] flex flex-col items-start gap-2 flex-none cursor-pointer hover:brightness-75"
             key={e.slug}
           >
             <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden">
@@ -32,7 +32,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
                 src={e.anilistData.coverImage.large}
                 alt="Movie Cover"
                 fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                sizes="(max-width: 768px), (max-width: 1200px) 25vw, 20vw"
                 loading="eager"
                 className="object-cover"
               />

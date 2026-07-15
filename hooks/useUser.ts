@@ -10,9 +10,12 @@ export const useUser = () => {
       const { data } = await api.get('auth/me');
       return data;
     }, 
-    enabled: isAuthChecked,
+    enabled: isAuthChecked, 
    retry : false,
-   staleTime: 15 * 60 * 1000, 
-    gcTime: 30 * 60 * 1000,
+   staleTime: Infinity,
+   refetchOnWindowFocus: false,
+   refetchOnMount: false,
+    refetchIntervalInBackground: false,
+    refetchOnReconnect: false,
   });
 };

@@ -1,43 +1,71 @@
-import Image from "next/image"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
-import { AnimeDetailType } from "@/types/anime"
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { AnimeDetailType } from "@/types/anime";
+
 interface Prop {
-  info: AnimeDetailType
+  info: AnimeDetailType;
 }
+
 const InfoAnime = ({ info }: Prop) => {
   return (
-    <div className="w-full flex flex-col md:flex-row  px-2 py-2   gap-5">
-      <Image
-        src={info.anilistData.coverImage.large}
-        alt="Movie Cover"
-        width={300}
-        height={400}
-        style={{ height: "auto" }}
-        loading="eager"
-        className="rounded-lg mx-auto lg:mx-0 object-cover aspect-3/4 xl:flex-2"
-      />
-      <div className="md:text-left text-center flex-4 flex flex-col gap-5 ">
-        <h1 className="text-white  text-[24px] font-semibold tracking-tight ">{info.title}</h1>
-        <h1 className="text-[20px]">{`${info.anilistData.title.romaji} ,${info.anilistData.title.english}`}</h1>
-        <div className="flex flex-wrap justify-center gap-5 md:flex-col text-[16px]">
-          <div className="flex items-center gap-1">
-            <p>Score: </p>
+    <div className="w-full flex flex-col items-center md:items-start md:flex-row gap-6 p-4 md:p-6 bg-[#0b1317]/50 rounded-2xl border border-white/5">
+      
+      {/* Container ảnh: 
+        Mobile: Chiếm 70% chiều rộng màn hình, tỉ lệ 3/4
+        Desktop: Cố định 280px
+      */}
+      <div className="relative w-[70%] md:w-[280px] aspect-[3/4] overflow-hidden rounded-xl shadow-2xl">
+        <Image
+          src={info.anilistData.coverImage.large}
+          alt={info.title}
+          fill
+          // Tối ưu cho cả Mobile (độ phân giải cao) và Desktop
+          sizes="(max-width: 768px) 70vw, 280px"
+          priority
+          className="object-cover"
+        />
+      </div>
 
-            <FontAwesomeIcon className="text-yellow-300" icon={faStar} />
-            {info.anilistData.averageScore}
+      {/* Cột thông tin: căn giữa trên mobile, căn trái trên desktop */}
+      <div className="flex-1 flex flex-col gap-4 text-center md:text-left w-full">
+        <div>
+          <h1 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+            {info.title}
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            {info.anilistData.title.romaji} • {info.anilistData.title.english}
+          </p>
+        </div>
 
+        <div className="flex flex-col gap-3 items-center md:items-start">
+          <div className="flex items-center gap-2 text-lg">
+            <span className="text-gray-300">Score:</span>
+            <div className="flex items-center gap-1.5 bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">
+              <FontAwesomeIcon className="text-yellow-400" icon={faStar} />
+              <span className="font-bold text-yellow-400">{info.anilistData.averageScore? info.anilistData.averageScore: "?" }%</span>
+            </div>
           </div>
-          <div className="flex flex-wrap px-5 md:px-0 justify-center md:justify-normal items-center gap-2">
-            {info.anilistData.genres.map((e: string) => (
-              <div className="border px-2 py-2 rounded-lg bg-blue-950 border-blue-900" key={e}>{e}</div>
+
+          <div className="flex flex-wrap justify-center md:justify-start gap-2">
+            {info.anilistData.genres.map((genre: string) => (
+              <span 
+                className="px-3 py-1 text-xs font-medium rounded-md bg-blue-900/30 border border-blue-800/50 text-blue-200" 
+                key={genre}
+              >
+                {genre}
+              </span>
             ))}
           </div>
         </div>
-        <div className="line-clamp-10 px-5 md:px-0 max-w-full text-[16px] text-white/50 text-left" dangerouslySetInnerHTML={{ __html: info.description }}></div>
+
+        <div 
+          className="text-gray-300/80 leading-relaxed text-sm md:text-base line-clamp-6 text-left"
+          dangerouslySetInnerHTML={{ __html: info.description }} 
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default InfoAnime
+export default InfoAnime;

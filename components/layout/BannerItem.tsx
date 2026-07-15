@@ -4,7 +4,7 @@ import Image from "next/image";
 import { BannerType } from "@/types/banner";
 import { faStar, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import VideoPlayer from "@/app/(pages)/stream/[slug]/VideoPlayer";
+import VideoPlayer from "../common/BannerPlayer";
 import WatchNow from "../common/WatchNow";
 
 interface Props {
@@ -43,7 +43,7 @@ export default function BannerItem({ banner, isActive }: Props) {
 
     const bannerImg = banner.anilistData?.bannerImage || '/fallback.jpg';
     return (
-        <section className="relative w-full h-[300px] sm:h-[400px] xl:h-full overflow-hidden text-white bg-black z-0">
+        <section className="relative w-full h-full  overflow-hidden text-white bg-black z-0">
             <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
                 {isPlayingTrailer && embedUrl ? (
 

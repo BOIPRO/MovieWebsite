@@ -24,17 +24,26 @@ html::-webkit-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-custom::-webkit-scrollbar {
-    width: 6px;
-  }
-  .scrollbar-custom::-webkit-scrollbar-thumb {
-     background: linear-gradient(180deg, #ff7a18, #af002d);
-    border-radius: 10px;
-  }
-  .scrollbar-custom::-webkit-scrollbar-track {
-  background: transparent;
+  /* Tùy chỉnh thanh cuộn cho các trình duyệt Webkit (Chrome, Edge, Safari) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;       /* Độ rộng thanh cuộn dọc */
+  height: 6px;      /* Độ cao thanh cuộn ngang */
 }
 
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); /* Màu nền track */
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #ff0000; /* Màu của thanh cuộn */
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #ff0000; /* Màu khi di chuột vào thanh cuộn */
+}
 }
 html {
   font-size: 12px; /* Mobile */
