@@ -11,10 +11,6 @@ const InfoAnime = ({ info }: Prop) => {
   return (
     <div className=" flex flex-col px-2  items-center md:items-start md:flex-row gap-6 bg-[#0b1317]/50 rounded-2xl border border-white/5">
       
-      {/* Container ảnh: 
-        Mobile: Chiếm 70% chiều rộng màn hình, tỉ lệ 3/4
-        Desktop: Cố định 280px
-      */}
       <div className="relative w-[40%] md:w-[280px] aspect-[3/4] overflow-hidden rounded-xl shadow-2xl">
         <Image
           src={info.anilistData.coverImage.large}
