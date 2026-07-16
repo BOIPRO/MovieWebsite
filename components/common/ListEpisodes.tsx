@@ -48,7 +48,7 @@ const ListEpsiodes = ({ listEpisode, slug, episodeNumberClicked }: Prop) => {
                 <div 
                     ref={scrollRef} 
                     onScroll={handleScroll} 
-                    className={`max-h-[450px] grid gap-2.5 pr-2 overflow-y-auto scrollbar-custom
+                    className={`max-h-[450px]  grid gap-2.5 pr-2 overflow-y-auto scrollbar-custom
                     ${pathname.includes("/info") ? "grid-cols-5 lg:grid-cols-8 xl:grid-cols-12" : "grid-cols-5"}`}
                 >
                     {(!listEpisode || listEpisode.length === 0) ? (

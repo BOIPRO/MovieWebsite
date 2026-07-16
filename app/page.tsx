@@ -21,7 +21,7 @@ async function getAnimes() {
 
       <Banner banners={data.banner} />
 
-      <section className=' max-w-[1350px] mx-auto flex flex-col  gap-8 z-30'>
+      <section className=' max-w-[1350px] w-screen mx-auto flex flex-col  gap-8 z-30'>
         <AnimeSection text={"Anime nổi bật"} animes={data.trending} />
         <AnimeSection text={"Anime đang chiếu"} animes={data.animeReleasing} />
         <AnimeSection text={"Anime phổ biến"} href='/anime-pho-bien/trang-1' animes={data.popularity} showMore={true} />

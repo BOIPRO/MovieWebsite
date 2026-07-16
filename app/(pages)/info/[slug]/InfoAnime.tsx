@@ -9,13 +9,13 @@ interface Prop {
 
 const InfoAnime = ({ info }: Prop) => {
   return (
-    <div className="w-full flex flex-col items-center md:items-start md:flex-row gap-6 p-4 md:p-6 bg-[#0b1317]/50 rounded-2xl border border-white/5">
+    <div className=" flex flex-col px-2  items-center md:items-start md:flex-row gap-6 bg-[#0b1317]/50 rounded-2xl border border-white/5">
       
       {/* Container ảnh: 
         Mobile: Chiếm 70% chiều rộng màn hình, tỉ lệ 3/4
         Desktop: Cố định 280px
       */}
-      <div className="relative w-[70%] md:w-[280px] aspect-[3/4] overflow-hidden rounded-xl shadow-2xl">
+      <div className="relative w-[40%] md:w-[280px] aspect-[3/4] overflow-hidden rounded-xl shadow-2xl">
         <Image
           src={info.anilistData.coverImage.large}
           alt={info.title}
@@ -26,9 +26,7 @@ const InfoAnime = ({ info }: Prop) => {
           className="object-cover"
         />
       </div>
-
-      {/* Cột thông tin: căn giữa trên mobile, căn trái trên desktop */}
-      <div className="flex-1 flex flex-col gap-4 text-center md:text-left w-full">
+      <div className="flex-1 flex flex-col gap-4 text-center md:text-left ">
         <div>
           <h1 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight">
             {info.title}
@@ -60,7 +58,7 @@ const InfoAnime = ({ info }: Prop) => {
         </div>
 
         <div 
-          className="text-gray-300/80 leading-relaxed text-sm md:text-base line-clamp-6 text-left"
+          className="text-gray-300/80 leading-relaxed text-sm md:text-base px-2 md:px-0 line-clamp-6 text-left"
           dangerouslySetInnerHTML={{ __html: info.description }} 
         />
       </div>

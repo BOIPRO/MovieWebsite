@@ -27,7 +27,7 @@ export default function MainLayoutWrapper({user,accessToken,children }: Props) {
   const isAuthPage = pathname === '/login' || pathname === '/register';
   return (
     <>
-      <main className="min-h-screen w-full flex-col justify-between font-extrabold  bg-[#010202] text-white">
+      <main className="min-h-screen  flex-col justify-between font-extrabold  bg-[#010202] text-white">
         
         {!isAuthPage && <NavBar user = {user} />}
         

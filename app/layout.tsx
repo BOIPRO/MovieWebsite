@@ -53,7 +53,7 @@ export default async function  RootLayout({
   return (
     <html
       lang="en">
-      <body  className = {`bg-black flex flex-col px-2 ${roboto.className}`}>
+      <body  className = {`bg-black flex flex-col px-2 w-screen ${roboto.className}`}>
           <Providers>
                 <MainLayoutWrapper user = {user} accessToken = {accessToken} >{children}</MainLayoutWrapper>
           </Providers>

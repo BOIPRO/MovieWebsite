@@ -73,10 +73,10 @@ const NavBar = ({user} : Prop) => {
             : 'xl:bg-transparent text-white transition-all duration-300 ease-in-out'
         : 'bg-black/80 backdrop-blur-md text-white shadow-md';
     return (
-        <nav className={`${isHomepage ? "fixed" : "sticky"} top-0 left-0 z-50  ${navbarBgClass} `}>
+        <nav className={`${isHomepage ? "fixed" : "sticky"} top-0 w-full px-5   z-50  ${navbarBgClass} `}>
             <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
-            <div className='w-screen  flex-row   '>
-                <section className='flex w-screen px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
+            <div className=' flex-row   '>
+                <section className='flex px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
                     <div className='flex xl:gap-5 '>
                         <button onClick={() => SetopenMenu(!openMenu)} className='xl:hidden text-[20px] cursor-pointer hover:text-menubutton'>
 
