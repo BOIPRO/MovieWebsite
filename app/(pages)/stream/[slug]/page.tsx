@@ -7,41 +7,37 @@ type Props = {
     slug: string
   }
 }
-const page = async ({params} : Props) => {
-    const {slug} = await params
-    const regex = /(.*)-(\d+)-(tap-.*)$/; 
-    const match = slug.match(regex)
-    if (match) {
+const page = async ({ params }: Props) => {
+  const { slug } = await params
+  const regex = /(.*)-(\d+)-(tap-.*)$/;
+  const match = slug.match(regex)
+  if (match) {
     const slugAnime = match[1]
-    const anilistId = match[2];     
+    const anilistId = match[2];
     const episodeSlug = match[3];
     const match2 = slug.match(/tap-(.*)/);
     const episodeNumber = match2 ? match2[1] : null!;
-    const [resdata,resEpisode] = await Promise.all([
-      fetch(`${process.env.API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`,{cache : 'no-store'},),
-      fetch(`${process.env.API_URL}/movies/episodes?id=${anilistId}`,{ next: { revalidate: 300 } })
+    const [resdata, resEpisode] = await Promise.all([
+      fetch(`${process.env.API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`, { cache: 'no-store' },),
+      fetch(`${process.env.API_URL}/movies/episodes?id=${anilistId}`, { next: { revalidate: 300 } })
     ])
-    const listEpisode : Episode[] = await resEpisode.json()
+    const listEpisode: Episode[] = await resEpisode.json()
     const data = await resdata.text()
-      return (
-        <Suspense fallback={<div className="spinner">Đang tải chi tiết...</div>}>
-            <div className='max-w-[1350px]  mx-auto '>
-        <div className='gap-2  xl:flex xl:h-[500px]'>
-          {data === '' ? 
-          <div className='flex-1 mx-auto text-center '>
-            <p>Chưa có phim thông cảm nhé hihi</p>
-          </div>
-           :  <VideoPlayer m3u8= {data} /> }
-            <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumberClicked={episodeNumber} />
-        </div>
-          
-      </div>
-      </Suspense>
-    )
-    }
     return (
-      <div>Link bi loi</div>
+    
+        <div className='max-w-[1350px]  mx-auto '>
+          <div className='gap-2  xl:flex xl:h-[500px]'>
+            <VideoPlayer m3u8={data} />
+            <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumberClicked={episodeNumber} />
+          </div>
+
+        </div>
+     
     )
+  }
+  return (
+    <div>Link bi loi</div>
+  )
 }
 
 export default page
