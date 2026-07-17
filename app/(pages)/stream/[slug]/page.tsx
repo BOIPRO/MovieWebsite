@@ -1,5 +1,6 @@
 import VideoPlayer from './VideoPlayernew';
 import { Episode } from '@/types/episode';
+import { Suspense } from 'react';
 import ListEpsiodes from "@/components/common/ListEpisodes";
 type Props = {
   params: {
@@ -22,8 +23,9 @@ const page = async ({params} : Props) => {
     ])
     const listEpisode : Episode[] = await resEpisode.json()
     const data = await resdata.text()
-      return (  
-      <div className='max-w-[1350px]  mx-auto '>
+      return (
+        <Suspense fallback={<div className="spinner">Đang tải chi tiết...</div>}>
+            <div className='max-w-[1350px]  mx-auto '>
         <div className='gap-2  xl:flex xl:h-[500px]'>
           {data === '' ? 
           <div className='flex-1 mx-auto text-center '>
@@ -34,6 +36,7 @@ const page = async ({params} : Props) => {
         </div>
           
       </div>
+      </Suspense>
     )
     }
     return (

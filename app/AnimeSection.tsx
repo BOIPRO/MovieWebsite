@@ -43,7 +43,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
               </div>
             </div>
 
-            <p className="text-white text-[16px] font-semibold break-words w-full">
+            <p className="text-white text-[16px] font-semibold break-words w-full line-clamp-2">
               {e.title}
             </p>
           </Link>

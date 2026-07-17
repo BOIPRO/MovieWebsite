@@ -13,7 +13,7 @@ const InfoAnime = ({ info }: Prop) => {
       
       <div className="relative w-[40%] md:w-[280px] aspect-[3/4] overflow-hidden rounded-xl shadow-2xl">
         <Image
-          src={info.anilistData.coverImage.large}
+          src={info.anilistData.coverImage?.large}
           alt={info.title}
           fill
           // Tối ưu cho cả Mobile (độ phân giải cao) và Desktop
