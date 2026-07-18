@@ -42,7 +42,7 @@ export default function Banner({ banners }: BannerProps) {
         observeParents={true}
         resizeObserver={true}
         autoplay={{
-          delay: 10000,
+          delay: 20000,
           disableOnInteraction: false,
         }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
