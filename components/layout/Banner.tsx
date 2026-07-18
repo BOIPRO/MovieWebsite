@@ -30,7 +30,7 @@ export default function Banner({ banners }: BannerProps) {
   }, []);
 
   return (
-   <div className=" w-full xl:h-screen aspect-video bg-[#0b1317] relative overflow-hidden banner-container">
+   <div className=" w-full  xl:h-screen aspect-video bg-[#0b1317] relative overflow-hidden banner-container">
       <Swiper
         onSwiper={(swiper) => (mainSwiperRef.current = swiper)}
         modules={[Autoplay, EffectFade, Thumbs]}
@@ -42,7 +42,7 @@ export default function Banner({ banners }: BannerProps) {
         observeParents={true}
         resizeObserver={true}
         autoplay={{
-          delay: 5000,
+          delay: 10000,
           disableOnInteraction: false,
         }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
@@ -57,7 +57,7 @@ export default function Banner({ banners }: BannerProps) {
         ))}
       </Swiper>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 w-full max-w-[1000px] px-5 hidden xl:block">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30  w-full max-w-[1000px]  px-5 hidden xl:block">
         <Swiper
           onSwiper={setThumbsSwiper}
           loop={true}
@@ -90,12 +90,11 @@ export default function Banner({ banners }: BannerProps) {
       </div>
 
       <style jsx global>{`
-        /* Tối ưu hóa render cho container */
         .banner-container {
           contain: layout size;
         }
 
-        /* Xử lý active state cho thumb */
+      
         .thumbs-swiper .swiper-slide {
           will-change: transform;
         }
@@ -107,7 +106,7 @@ export default function Banner({ banners }: BannerProps) {
           filter: brightness(110%) !important;
         }
 
-        /* Đảm bảo Swiper không bị co bóp khi resize */
+     
         .swiper-slide {
           flex-shrink: 0;
         }
