@@ -146,7 +146,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                     onMouseEnter={() => setSelectedIndex(index)}
                                 >
                                     <div className="relative w-12 h-16 flex-shrink-0 mr-3">
-                                        <Image src={item.anilistData.coverImage.large} alt={item.title} fill sizes="100px" className="rounded object-cover" />
+                                        <Image src={item.anilistData.coverImage.large} alt={item.title} fill sizes="100px" className="rounded object-cover" unoptimized />
                                     </div>
                                     <div className="flex-grow">
                                         <h4 className="text-white text-sm font-medium leading-tight line-clamp-2">{item.title}</h4>

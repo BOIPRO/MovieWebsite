@@ -41,6 +41,7 @@ const ListAnime = ({ media, totalPages, page, route }: ListAnimeProp) => {
                                 sizes="(max-width: 400px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 16vw"
                                 priority
                                 className="object-cover rounded-lg"
+                                unoptimized
                             />
                             <div className="absolute top-2 right-2 z-10 bg-blue-600 px-2 py-1 rounded text-white text-[16px] font-bold backdrop-blur-sm">
                                 {e.currentEpisode === "Full" ? "Full" : `Tập ${e.currentEpisode} `}
