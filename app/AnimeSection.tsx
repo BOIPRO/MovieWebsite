@@ -35,6 +35,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
                 sizes="(max-width: 768px), (max-width: 1200px) 25vw, 20vw"
                 loading="eager"
                 className="object-cover"
+                unoptimized
               />
 
               {/* Phần hiển thị tập phim */}

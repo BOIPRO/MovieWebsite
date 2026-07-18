@@ -16,10 +16,10 @@ const InfoAnime = ({ info }: Prop) => {
           src={info.anilistData.coverImage?.large}
           alt={info.title}
           fill
-          // Tối ưu cho cả Mobile (độ phân giải cao) và Desktop
           sizes="(max-width: 768px) 70vw, 280px"
           priority
           className="object-cover"
+          unoptimized
         />
       </div>
       <div className="flex-1 flex flex-col gap-4 text-center md:text-left ">
