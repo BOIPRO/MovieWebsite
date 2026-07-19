@@ -167,7 +167,7 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
                                                 src={selectedResult.anilistData.coverImage.large}
                                                 alt={selectedResult.title}
                                                 fill
-
+                                                unoptimized
                                                 sizes="100px"
                                                 className="rounded-lg object-contain"
                                             />
