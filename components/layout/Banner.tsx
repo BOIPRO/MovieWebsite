@@ -78,6 +78,7 @@ export default function Banner({ banners }: BannerProps) {
                   alt={banner.title}
                   fill
                   sizes="200px"
+                  unoptimized
                   className="object-cover transition-transform duration-500 group-hover:scale-110 brightness-75 group-hover:brightness-100"
                 />
                  <div className="absolute inset-0 bg-black/40 flex items-end p-1 opacity-0 group-hover:opacity-100 transition-opacity">

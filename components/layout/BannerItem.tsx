@@ -57,6 +57,7 @@ export default function BannerItem({ banner, isActive }: Props) {
                             fill
                             priority={isActive}
                             className="object-cover object-center  brightness-[1.05]"
+                            unoptimized
                         />
                     </div>
                 )}
