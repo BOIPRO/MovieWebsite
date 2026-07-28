@@ -110,6 +110,7 @@ const AnimeSection = ({ showMore, animes, text, href }: TrendingProps) => {
                   fill
                   sizes="(max-width: 768px) 150px, 200px"
                   className="object-cover group-hover:brightness-75 transition-all duration-300"
+                  unoptimized
                 />
 
                 <div className="absolute top-2 right-2 z-10 bg-blue-600 px-2 py-1 rounded text-white text-[12px] lg:text-[14px] font-bold">
