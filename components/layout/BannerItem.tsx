@@ -66,7 +66,15 @@ export default function BannerItem({ banner, isActive }: Props) {
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0b1317] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-0 max-w-[1350px] mx-auto px-4 flex flex-col justify-end pb-6 xl:justify-center xl:pb-0 z-20 ">
 
-                <div className="flex flex-col items-center xl:items-start text-center xl:text-left w-full">
+                <div
+                    className={`
+        flex flex-col items-center xl:items-start text-center xl:text-left w-full
+        ${isActive
+                            ? "xl:animate-[slideInLeft_0.8s_ease-out_forwards]"
+                            : "xl:opacity-0"
+                        }
+    `}
+                >
                     <h1 className="text-xl md:text-4xl xl:text-5xl font-black max-w-[650px]  tracking-wide line-clamp-2 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] px-2 xl:px-0">
                         {banner.title}
                     </h1>
@@ -84,15 +92,6 @@ export default function BannerItem({ banner, isActive }: Props) {
                         <span>Nhật Bản</span>
                     </div>
                     <div className="flex items-center justify-center xl:justify-start mt-4 z-100">
-                        {/* <a
-                            href={`/stream/${banner.slug}-${banner.anilistId}-${banner.firstEpisode}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-blue-600 hover:bg-blue-100 text-white font-bold px-6 py-2 md:px-8 md:py-3 rounded-full flex items-center gap-2 transition transform active:scale-95 xl:hover:scale-105 shadow-md shadow-blue-600/20 cursor-pointer text-[14px] md:text-[16px]"
-                        >
-                            <FontAwesomeIcon icon={faPlay} className="w-3 h-3 md:w-4 md:h-4" />
-                            Xem ngay
-                        </a> */}
 
                         <WatchNow firstEpisodeUrl={`/stream/${banner.slug}-${banner.anilistId}-${banner.firstEpisode}`} />
                     </div>

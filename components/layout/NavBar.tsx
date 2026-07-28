@@ -2,43 +2,24 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from 'next/image'
-import { faMagnifyingGlass, faArrowRightToBracket, faBars } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useUser } from '@/hooks/useUser'
 import { useAuthStore } from '@/lib/services/useAuthStore'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
 import AdvancedSearchModal from '../common/AdvancedSearch'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-interface Prop {
-    user: {
-        username: string
-    }
-}
-const NavBar = ({user} : Prop) => {
+
+const NavBar = () => {
     const router = useRouter()
     const [openMenu, SetopenMenu] = useState(false);
     const [openSearch, SetopenSearch] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const queryClient = useQueryClient()
     const pathname = usePathname()
-    const { data, isLoading, error } = useUser();
-    const currentUser = data ?? user
     const useAuthenStore = useAuthStore as any
     const isHomepage = pathname === '/';
+
     useEffect(() => {
         if (!isHomepage) return;
 
@@ -55,6 +36,7 @@ const NavBar = ({user} : Prop) => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isHomepage]);
+
     const handleLogout = async () => {
         await fetch(`/api/bemovie/auth/logout`, {
             method: 'POST',
@@ -63,23 +45,24 @@ const NavBar = ({user} : Prop) => {
         });
         queryClient.clear();
         useAuthenStore.getState().clearAuth();
-        router.refresh()
-
-        
+        router.refresh();
     };
+
     const navbarBgClass = isHomepage
         ? isScrolled
             ? 'bg-black/70 backdrop-blur-md text-white shadow-md transition-all duration-300 ease-in-out'
             : 'xl:bg-transparent text-white transition-all duration-300 ease-in-out'
         : 'bg-black/80 backdrop-blur-md text-white shadow-md';
-    return (
-        <nav className={`${isHomepage ? "fixed" : "sticky"} top-0 w-full px-5   z-50  ${navbarBgClass} `}>
-            <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
-            <div className=' flex-row   '>
-                <section className='flex px-2  items-center justify-between  pt-2 pb-4 mx-auto'>
-                    <div className='flex xl:gap-5 '>
-                        <button onClick={() => SetopenMenu(!openMenu)} className='xl:hidden text-[20px] cursor-pointer hover:text-menubutton'>
 
+    return (
+        <nav className={`${isHomepage ? "sticky xl:fixed" : "sticky"}  top-0 w-full px-5 z-50 ${navbarBgClass}`}>
+            {/* Modal tìm kiếm nâng cao */}
+            <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
+            
+            <div className='flex-row'>
+                <section className='flex px-2 items-center justify-between pt-2 pb-4 mx-auto'>
+                    <div className='flex xl:gap-5 items-center'>
+                        <button onClick={() => SetopenMenu(!openMenu)} className='xl:hidden text-[20px] cursor-pointer hover:text-blue-500'>
                             <FontAwesomeIcon icon={faBars} />
                         </button>
                         <div className='text-white py-2 flex items-center'>
@@ -103,48 +86,29 @@ const NavBar = ({user} : Prop) => {
                             </Link>
                         </div>
                     </div>
-                    <div className='flex gap-4'>
-                        <button onClick={() => SetopenSearch(!openSearch)} className='text-[20px] cursor-pointer hover:text-menubutton'>
+
+                    {/* Nhóm bên phải: Nút Search + Đăng nhập */}
+                    <div className='flex items-center gap-4'>
+                        <button 
+                            onClick={() => SetopenSearch(true)} 
+                            className='cursor-pointer text-[20px] hover:text-blue-500 p-2 text-white'
+                            title="Tìm kiếm"
+                        >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
-                        {currentUser || currentUser?.username ? (
-                            <div className='text-navbar flex gap-2 items-center'>
-                                <p className='text-[16px]'>{currentUser.username}</p>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger className="cursor-pointer" >
-                                        <Avatar size='lg' >
-                                            <AvatarImage
-                                                src="https://github.com/shadcn.png"
-                                                alt="@shadcn"
-                                                className="grayscale"
-                                            />
-                                            <AvatarFallback>CN</AvatarFallback>
-                                        </Avatar>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className='bg-blue backdrop-blur-sm border-white/20 text-white' >
-                                        <DropdownMenuGroup>
-                                            <DropdownMenuLabel>{currentUser.username}</DropdownMenuLabel>
-                                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                                            <DropdownMenuItem onClick={handleLogout} >Logout</DropdownMenuItem>
-                                        </DropdownMenuGroup>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
 
-                        ) : (
-                            <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px]  py-2 px-4 justify-center items-center hidden text-navbar cursor-pointer'>
-                                <p>Đăng nhập</p>
-                            </Link>
-                        )}
-
+                        <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center hidden text-white cursor-pointer'>
+                            <p>Đăng nhập</p>
+                        </Link>
                     </div>
+
+                    {/* Menu trượt cho Mobile */}
                     <div className={`fixed top-0 left-0 h-screen w-[280px] bg-black text-white shadow-2xl z-50 p-6 xl:hidden
-        transform transition-transform duration-300 ease-in-out
-        ${openMenu ? 'translate-x-0' : '-translate-x-full'}`}
+                        transform transition-transform duration-300 ease-in-out
+                        ${openMenu ? 'translate-x-0' : '-translate-x-full'}`}
                     >
-                        {/* Đầu Menu: Logo nhỏ và nút X để đóng */}
                         <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
-                            <span className="font-bold text-lg"> Menu</span>
+                            <span className="font-bold text-lg">Menu</span>
                             <button
                                 onClick={() => SetopenMenu(false)}
                                 className="text-gray-400 hover:text-white text-xl p-1"
@@ -153,7 +117,6 @@ const NavBar = ({user} : Prop) => {
                             </button>
                         </div>
 
-                        {/* Các danh mục nội dung bên trong Menu trượt */}
                         <nav className="flex flex-col gap-4 text-[16px]">
                             <Link href={'/'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
                                 Trang Chủ
@@ -166,19 +129,7 @@ const NavBar = ({user} : Prop) => {
                             </Link>
                         </nav>
                     </div>
-
-
-
                 </section>
-                {/* <section className='xl:hidden flex-col px-2 bg-slate-950 justify-center border-t-white/50 border-t-[0.2px] '>
-                    <div className='flex text-navbar justify-between py-4 text-[20px]'>
-                        
-                        <button onClick={() => SetopenSearch(!openSearch)} className='cursor-pointer hover:text-menubutton'>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </section> */}
-
             </div>
         </nav>
     )

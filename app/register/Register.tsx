@@ -13,38 +13,40 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import VerifyCard from '@/components/ui/VerifyCard'
 const Register = () => {
     const [username, Setusername] = useState("");
     const [password, Setpassword] = useState("");
-    const [email, Setemail] = useState("");
+    const router = useRouter()
+    // const [email, Setemail] = useState("");
     const [error, Seterror] = useState("");
     const [showpassword, SetShowpassword] = useState(false)
-    const [isPopup, setIsPopup] = useState(false)
+    // const [isPopup, setIsPopup] = useState(false)
     const handlerUser = (e: React.ChangeEvent<HTMLInputElement>): void => {
         Setusername(e.target.value);
     }
-    const handleremail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        Setemail(e.target.value);
-    }
+    // const handleremail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    //     Setemail(e.target.value);
+    // }
     const handlerPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         Setpassword(e.target.value);
     }
     const handlerShow = (): void => {
         SetShowpassword(!showpassword)
     }
-    const isValidEmail = (email: string): boolean => {
-        const regex =
-            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+    // const isValidEmail = (email: string): boolean => {
+    //     const regex =
+    //         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 
-        return regex.test(email);
-    }
+    //     return regex.test(email);
+    // }
 
     const handlerSubmit = async () => {
         try {
-            if (!isValidEmail(email) || username === "" || password === "") {
+            if (username === "" || password === "") {
                 Seterror("Co loi xay ra vui long nhap lai")
                 return;
             }
@@ -57,7 +59,6 @@ const Register = () => {
                     'Expires': '0',
                 },
                 body: JSON.stringify({
-                    email: email,
                     username: username,
                     password: password
                 })
@@ -66,13 +67,13 @@ const Register = () => {
             console.log(res.status)
             if (!res.ok) {
                 Seterror(data.message)
-                setIsPopup(false)
+
             }
             else {
-                setIsPopup(true)
                 Seterror("")
                 Setpassword("")
                 Setusername("")
+                router.push('/login')
             }
 
         } catch (error: any) {
@@ -82,70 +83,54 @@ const Register = () => {
 
     return (
         <div className="w-screen h-screen overflow-hidden flex items-center bg-neutral-950" >
-            {isPopup ?
-                <VerifyCard email={email} />
-                :
-                <Card className="w-full max-w-sm mx-auto bg-neutral-900">
-                    <CardHeader className='text-white'>
-                        <CardTitle>Register</CardTitle>
-                        <CardAction>
-                            <a href="login" className='hover:underline text-[16px]'>
-                                Login
-                            </a>
-                        </CardAction>
-                    </CardHeader>
-                    <CardContent>
-                        <form>
-                            <div className="flex flex-col gap-6 text-white">
-                                <div className="grid gap-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        value={email}
-                                        id="email"
-                                        type="email"
-                                        placeholder="m@example.com"
-                                        required
-                                        className='text-white border-white/40'
-                                        onChange={(e) => handleremail(e)}
-                                    />
+            <Card className="w-full max-w-sm mx-auto bg-neutral-900">
+                <CardHeader className='text-white'>
+                    <CardTitle>Register</CardTitle>
+                    <CardAction>
+                        <a href="login" className='hover:underline text-[16px]'>
+                            Login
+                        </a>
+                    </CardAction>
+                </CardHeader>
+                <CardContent>
+                    <form>
+                        <div className="flex flex-col gap-6 text-white">
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="username">Username</Label>
                                 </div>
-                                <div className="grid gap-2">
-                                    <div className="flex items-center">
-                                        <Label htmlFor="username">Username</Label>
-                                    </div>
-                                    <Input onChange={(e) => handlerUser(e)} value={username} id="username" required className='text-white border-white/40' />
+                                <Input onChange={(e) => handlerUser(e)} value={username} id="username" required className='text-white border-white/40' />
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="password">Password</Label>
                                 </div>
-                                <div className="grid gap-2">
-                                    <div className="flex items-center">
-                                        <Label htmlFor="password">Password</Label>
-                                    </div>
-                                    <div className="relative">
-                                        <Input id="password" value={password} type={showpassword ? "text" : "password"} required className='text-white border-white/40 ' onChange={(e) => handlerPassword(e)} />
-                                        <button type="button" onClick={handlerShow} className='absolute top-2 left-[85%] lg:left-[90%]'>
-                                            <FontAwesomeIcon icon={showpassword ? faEye : faEyeSlash} />
-                                        </button>
-                                    </div>
-
+                                <div className="relative">
+                                    <Input id="password" value={password} type={showpassword ? "text" : "password"} required className='text-white border-white/40 ' onChange={(e) => handlerPassword(e)} />
+                                    <button type="button" onClick={handlerShow} className='absolute top-2 left-[85%] lg:left-[90%]'>
+                                        <FontAwesomeIcon icon={showpassword ? faEye : faEyeSlash} />
+                                    </button>
                                 </div>
 
                             </div>
-                        </form>
-                        <CardDescription className='text-red-500'>
-                            {error}
-                        </CardDescription>
-                    </CardContent>
-                    <CardFooter className="flex-col gap-2">
-                        <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
-                            Đăng kí
+
+                        </div>
+                    </form>
+                    <CardDescription className='text-red-500'>
+                        {error}
+                    </CardDescription>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button onClick={handlerSubmit} type="submit" className="w-full bg-white text-black">
+                        Đăng kí
+                    </Button>
+                    <Link href={'/'} className='w-full'>
+                        <Button type="submit" className="w-full border-white/40 border text-white">
+                            Quay về trang chủ
                         </Button>
-                        <Link href={'/'} className='w-full'>
-                            <Button type="submit" className="w-full border-white/40 border text-white">
-                                Quay về trang chủ
-                            </Button>
-                        </Link>
-                    </CardFooter>
-                </Card>
-            }
+                    </Link>
+                </CardFooter>
+            </Card>
 
 
         </div>

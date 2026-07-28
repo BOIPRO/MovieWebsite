@@ -13,11 +13,9 @@ const Page = async ({ params } : Props) => {
     const {slug} = await params;
    const id = String(slug.split('-').pop());
     const [resInfo,resEpisode] = await Promise.all([
-       fetch(`${process.env.API_URL}/movies/info?id=${id}`,{
-        next: { revalidate: 300, tags: [`anime-info-${id}`] }
-       }),
+       fetch(`${process.env.API_URL}/movies/info?id=${id}`),
        fetch(`${process.env.API_URL}/movies/episodes?id=${id}`,{
-        next: { revalidate: 300, tags: [`anime-episode-${id}`] }  
+        next: { revalidate: 100, tags: [`anime-episode-${id}`] }  
       }),
     ])
    
