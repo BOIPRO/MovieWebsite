@@ -12,6 +12,7 @@ import "./globals.css";
 import MainLayoutWrapper from "@/components/layout/MainLayout";
 // SEO
 export const metadata: Metadata = {
+   metadataBase: new URL("https://movie-website-red-tau.vercel.app"),
   title: {
     default: "BMovie - Xem Anime Online Miễn Phí Không Quảng Cáo",
     template: "%s | BMovie",
