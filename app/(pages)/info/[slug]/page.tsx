@@ -35,7 +35,7 @@ export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
 
-  const { slug } = params;
+  const { slug } = await params;
   const id = String(slug.split("-").pop());
 
   const infoAnime = await getAnime(id);
@@ -71,7 +71,7 @@ export async function generateMetadata(
 
 
 const Page = async ({ params }: Props) => {
-  const { slug } = params;
+  const { slug } = await params;
   const id = String(slug.split("-").pop());
 
   const [resInfo, resEpisode] = await Promise.all([
