@@ -5,12 +5,102 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Providers from "./Provider";
 import {Roboto } from 'next/font/google'
 const roboto = Roboto({ 
-  weight: ['400', '500', '700'], // BẮT BUỘC phải chọn weight đối với Roboto
+  weight: ['400', '500', '700'], 
   subsets: ['latin', 'vietnamese'], 
 });
 import "./globals.css";
 import MainLayoutWrapper from "@/components/layout/MainLayout";
-import { cookies } from "next/headers";
+// SEO
+export const metadata: Metadata = {
+  title: {
+    default: "BMovie - Xem Anime Online Miễn Phí Không Quảng Cáo",
+    template: "%s | BMovie",
+  },
+
+  description:
+    "BMovie là website xem anime online miễn phí, cập nhật anime mới nhất với chất lượng cao, tốc độ nhanh và không quảng cáo.",
+
+  keywords: [
+    "anime",
+    "xem anime",
+    "anime online",
+    "anime vietsub",
+    "anime miễn phí",
+    "phim anime",
+    "BMovie",
+  ],
+
+  authors: [
+    {
+      name: "BMovie",
+    },
+  ],
+
+  creator: "BMovie",
+
+  icons: {
+    icon: [
+      {
+        url: "/icons/BMovie.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "vi_VN",
+    url: "https://movie-website-red-tau.vercel.app/",
+    siteName: "BMovie",
+
+    title:
+      "BMovie - Xem Anime Online Miễn Phí Không Quảng Cáo",
+
+    description:
+      "Xem anime vietsub miễn phí, cập nhật anime mới nhất nhanh chóng tại BMovie.",
+
+    images: [
+      {
+        url: "/icons/BMovie.svg",
+        width: 512,
+        height: 512,
+        alt: "BMovie Logo",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title:
+      "BMovie - Xem Anime Online Miễn Phí",
+
+    description:
+      "Website xem anime online miễn phí, tốc độ nhanh, không quảng cáo.",
+
+    images: [
+      "/icons/BMovie.svg",
+    ],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  alternates: {
+    canonical: "https://movie-website-red-tau.vercel.app/",
+  },
+};
 // async function fetchAuthData() {
 //   const cookieStore = await cookies();
 //   const cookieString = cookieStore.toString();
@@ -35,16 +125,6 @@ import { cookies } from "next/headers";
 //   return { user, accessToken };
 // }
 
-export const metadata: Metadata = {
-  title: "BMovie",
-  description: "Xem tất cả anime yêu thích",
-  icons : [
-    {
-      url : '/icons/BMovie.svg',
-      type: 'image/svg+xml'
-    }
-  ]
-};
 export default async function  RootLayout({
   children,
 }: Readonly<{
