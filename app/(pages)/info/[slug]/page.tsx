@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const revalidate = 300;
-
+const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL
 async function getAnime(id: string): Promise<AnimeDetailType> {
   const res = await fetch(
     `${process.env.API_URL}/movies/info?id=${id}`,
@@ -41,13 +41,21 @@ export async function generateMetadata(
   const infoAnime = await getAnime(id);
 
   return {
-    title: `${infoAnime.title} - BMovie`,
+    title: `${infoAnime.title} (${infoAnime.anilistData.title.romaji} - ${infoAnime.anilistData.title.english}) - BMovie`,
     description: infoAnime.description || `Xem anime ${infoAnime.title} tại BMovie`,
-
+    keywords: [
+      `${infoAnime.title}`,
+      `${infoAnime.anilistData.title.romaji}`,
+      `${infoAnime.anilistData.title.english}`
+    ],
     openGraph: {
-      title: `${infoAnime.title} - BMovie`,
+      siteName: "BMovie",
+      locale: "vi_VN",
+      countryName: "Việt Nam",
+      title: `${infoAnime.title} (${infoAnime.anilistData.title.romaji} - ${infoAnime.anilistData.title.english}) - BMovie`,
       description:
         infoAnime.description || `Xem anime ${infoAnime.title}`,
+      url: `${baseUrl}/info/${slug}`,
       images: [
         {
           url: infoAnime.anilistData.coverImage.large,
@@ -56,9 +64,11 @@ export async function generateMetadata(
           alt: infoAnime.title,
         },
       ],
-      type: "video.movie",
+      type: "video.episode",
     },
-
+    alternates: {
+      canonical:  `${baseUrl}/info/${slug}`,
+    },
     twitter: {
       card: "summary_large_image",
       title: `${infoAnime.title} - BMovie`,
@@ -66,6 +76,10 @@ export async function generateMetadata(
         infoAnime.description || `Xem anime ${infoAnime.title}`,
       images: [infoAnime.anilistData.coverImage.large],
     },
+    robots : {
+      index : true,
+      follow : true,
+    }
   };
 }
 
