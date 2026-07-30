@@ -3,17 +3,24 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Providers from "./Provider";
-import {Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL
-const roboto = Roboto({ 
-  weight: ['400', '500', '700'], 
-  subsets: ['latin', 'vietnamese'], 
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin', 'vietnamese'],
 });
 import "./globals.css";
 import MainLayoutWrapper from "@/components/layout/MainLayout";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "BMovie",
+  alternateName: "BMovie",
+  url: "https://boimovie.vercel.app",
+};
 // SEO
 export const metadata: Metadata = {
-   metadataBase: new URL(`${baseUrl}`),
+  metadataBase: new URL(`${baseUrl}`),
   title: {
     default: "BMovie - Xem Anime Online Miễn Phí Không Quảng Cáo",
     template: "%s | BMovie",
@@ -60,7 +67,7 @@ export const metadata: Metadata = {
 
     description:
       "Xem anime vietsub miễn phí, cập nhật anime mới nhất nhanh chóng tại BMovie.",
-    countryName : "Việt Nam",
+    countryName: "Việt Nam",
     images: [
       {
         url: "/images/BMovieDemo.png",
@@ -103,9 +110,9 @@ export const metadata: Metadata = {
     canonical: `${baseUrl}`,
   },
 };
-export const viewport : Viewport = {
-  width : 'device-width',
-  initialScale : 1
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 }
 // async function fetchAuthData() {
 //   const cookieStore = await cookies();
@@ -131,19 +138,25 @@ export const viewport : Viewport = {
 //   return { user, accessToken };
 // }
 
-export default async function  RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    // const {user,accessToken} = await fetchAuthData();
+  // const {user,accessToken} = await fetchAuthData();
   return (
     <html
       lang="en">
-      <body  className = {`bg- flex flex-col w-screen ${roboto.className}`}>
-          <Providers>
-                <MainLayoutWrapper >{children}</MainLayoutWrapper>
-          </Providers>
+      <body className={`bg- flex flex-col w-screen ${roboto.className}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
+        <Providers>
+          <MainLayoutWrapper >{children}</MainLayoutWrapper>
+        </Providers>
         <Analytics />
         <SpeedInsights />
       </body>
