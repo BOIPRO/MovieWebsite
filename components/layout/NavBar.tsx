@@ -9,12 +9,19 @@ import { useAuthStore } from '@/lib/services/useAuthStore'
 import AdvancedSearchModal from '../common/AdvancedSearch'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+interface NavBarProps {
+    user: {
+        username: string;
+        avatar: string;
+    };
+}
 
-const NavBar = () => {
+const NavBar = ({ user }: NavBarProps) => {
     const router = useRouter()
     const [openMenu, SetopenMenu] = useState(false);
     const [openSearch, SetopenSearch] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [openProfile, setopenProfile] = useState(false)
     const queryClient = useQueryClient()
     const pathname = usePathname()
     const useAuthenStore = useAuthStore as any
@@ -58,7 +65,6 @@ const NavBar = () => {
         <nav className={`${isHomepage ? "sticky xl:fixed" : "sticky"}  top-0 w-full px-5 z-50 ${navbarBgClass}`}>
             {/* Modal tìm kiếm nâng cao */}
             <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
-            
             <div className='flex-row'>
                 <section className='flex px-2 items-center justify-between pt-2 pb-4 mx-auto'>
                     <div className='flex xl:gap-5 items-center'>
@@ -87,22 +93,59 @@ const NavBar = () => {
                         </div>
                     </div>
 
-                    {/* Nhóm bên phải: Nút Search + Đăng nhập */}
                     <div className='flex items-center gap-4'>
-                        <button 
-                            onClick={() => SetopenSearch(true)} 
+                        <button
+                            onClick={() => SetopenSearch(true)}
                             className='cursor-pointer text-[20px] hover:text-blue-500 p-2 text-white'
                             title="Tìm kiếm"
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
+                        {user ?
+                            <div className="relative">
+                                <button
+                                    onClick={() => setopenProfile(!openProfile)}
+                                    className="w-12 h-12 overflow-hidden rounded-full border border-zinc-700 bg-zinc-800 cursor-pointer"
+                                >
+                                    <img
+                                        src={user.avatar}
+                                        alt="Avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </button>
 
-                        <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center hidden text-white cursor-pointer'>
-                            <p>Đăng nhập</p>
-                        </Link>
+                                <div
+                                    className={`absolute right-0 top-full mt-2 w-52 origin-top-right overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 shadow-2xl
+      transition-all duration-200 ease-out
+      ${openProfile
+                                            ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
+                                            : "-translate-y-2 scale-95 opacity-0 pointer-events-none"
+                                        }`}
+                                >
+                                    <Link
+                                        href="/profile"
+                                        className="flex items-center px-4 py-3 text-sm text-gray-200 transition-all duration-200 hover:bg-neutral-800 hover:pl-5"
+                                    >
+                                        Thông tin cá nhân
+                                    </Link>
+
+                                    <div className="h-px bg-neutral-800" />
+
+                                    <button
+                                        onClick={handleLogout}
+                                        className=" flex w-full items-center px-4 py-3 text-left text-sm text-red-400 transition-all duration-200 hover:bg-red-500/10 hover:pl-5 hover:text-red-300"
+                                    >
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            </div>
+                            :
+                            <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center hidden text-white cursor-pointer'>
+                                <p>Đăng nhập</p>
+                            </Link>
+                        }
+
                     </div>
-
-                    {/* Menu trượt cho Mobile */}
                     <div className={`fixed top-0 left-0 h-screen w-[280px] bg-black text-white shadow-2xl z-50 p-6 xl:hidden
                         transform transition-transform duration-300 ease-in-out
                         ${openMenu ? 'translate-x-0' : '-translate-x-full'}`}

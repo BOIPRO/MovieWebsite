@@ -11,6 +11,7 @@ const roboto = Roboto({
 });
 import "./globals.css";
 import MainLayoutWrapper from "@/components/layout/MainLayout";
+import { cookies } from "next/headers";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -114,36 +115,35 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1
 }
-// async function fetchAuthData() {
-//   const cookieStore = await cookies();
-//   const cookieString = cookieStore.toString();
+async function fetchAuthData() {
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.toString();
 
-//   // 1. Gọi API Refresh để lấy accessToken mới
-//   const refreshRes = await fetch(`${process.env.API_URL}/auth/refresh`, {
-//     method: 'POST',
-//     headers: { 'Cookie': cookieString },
-//   });
+  // 1. Gọi API Refresh để lấy accessToken mới
+  const refreshRes = await fetch(`${process.env.API_URL}/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Cookie': cookieString },
+  });
 
-//   if (!refreshRes.ok) return { user: null, accessToken: null };
-//   const { accessToken } = await refreshRes.json();
-//   const userRes = await fetch(`${process.env.API_URL}/auth/me`, {
-//     headers: {
-//       'Authorization': `Bearer ${accessToken}`, 
-//     },
-//   });
+  if (!refreshRes.ok) return { user: null, accessToken: null };
+  const { accessToken } = await refreshRes.json();
+  const userRes = await fetch(`${process.env.API_URL}/auth/me`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`, 
+    },
+  });
 
-//   if (!userRes.ok) return { user: null, accessToken: null };
-//   const user = await userRes.json();
-//   console.log(user)
-//   return { user, accessToken };
-// }
+  if (!userRes.ok) return { user: null, accessToken: null };
+  const user = await userRes.json();
+  return { user, accessToken };
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const {user,accessToken} = await fetchAuthData();
+  const {user,accessToken} = await fetchAuthData();
   return (
     <html
       lang="en">
@@ -155,7 +155,7 @@ export default async function RootLayout({
           }}
         />
         <Providers>
-          <MainLayoutWrapper >{children}</MainLayoutWrapper>
+          <MainLayoutWrapper accessToken={accessToken} user={user} >{children}</MainLayoutWrapper>
         </Providers>
         <Analytics />
         <SpeedInsights />

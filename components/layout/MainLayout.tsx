@@ -7,29 +7,30 @@ import { useAuthStore } from '@/lib/services/useAuthStore';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 interface Props {
-    // user : {
-    //     username : string,
-    // },
-    // accessToken : string,
+    user : {
+        username : string,
+        avatar : string
+    },
+    accessToken : string,
      children : React.ReactNode
 }
 
-export default function MainLayoutWrapper({children }: Props) {
+export default function MainLayoutWrapper({ accessToken,user,children }: Props) {
   const queryClient = useQueryClient();
   const pathname = usePathname();
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     useAuthStore.getState().setAccessToken(accessToken);
-  //   }
-  //   if (user)
-  // queryClient.setQueryData(['userProfile'], user);
-  // }, [accessToken]);
+  useEffect(() => {
+    if (accessToken) {
+      useAuthStore.getState().setAccessToken(accessToken);
+    }
+    if (user)
+  queryClient.setQueryData(['userProfile'], user);
+  }, [accessToken]);
   const isAuthPage = pathname === '/login' || pathname === '/register';
   return (
     <>
       <main className="min-h-screen  flex-col justify-between font-extrabold  bg-[#010202] text-white">
         
-        {!isAuthPage && <NavBar  />}
+        {!isAuthPage && <NavBar user = {user} />}
         
         {children}
         {!isAuthPage && <Footer />}

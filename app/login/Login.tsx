@@ -45,6 +45,7 @@ const Login = () => {
             queryClient.setQueryData(['userProfile'], data.user); 
             setAccessToken(data.accessToken);
             router.push('/')
+             router.refresh();
         },
         onError: (error) => {
             Seterror(error.message);
