@@ -63,7 +63,6 @@ const NavBar = ({ user }: NavBarProps) => {
 
     return (
         <nav className={`${isHomepage ? "sticky xl:fixed" : "sticky"}  top-0 w-full px-5 z-50 ${navbarBgClass}`}>
-            {/* Modal tìm kiếm nâng cao */}
             <AdvancedSearchModal isOpen={openSearch} onClose={() => SetopenSearch(false)} />
             <div className='flex-row'>
                 <section className='flex px-2 items-center justify-between pt-2 pb-4 mx-auto'>
@@ -146,31 +145,88 @@ const NavBar = ({ user }: NavBarProps) => {
                         }
 
                     </div>
-                    <div className={`fixed top-0 left-0 h-screen w-[280px] bg-black text-white shadow-2xl z-50 p-6 xl:hidden
-                        transform transition-transform duration-300 ease-in-out
-                        ${openMenu ? 'translate-x-0' : '-translate-x-full'}`}
+                    <div
+                        className={`fixed top-0 h-screen left-0 z-50 w-[300px]
+    bg-neutral-950/95 backdrop-blur-xl
+    border-r border-neutral-800
+    shadow-[0_0_50px_rgba(0,0,0,0.6)]
+    transition-all duration-300 ease-out
+    ${openMenu
+                                ? "translate-x-0 opacity-100"
+                                : "-translate-x-full opacity-0"
+                            }
+    xl:hidden`}
                     >
-                        <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
-                            <span className="font-bold text-lg">Menu</span>
+                        <div className="flex items-center justify-between border-b border-neutral-800 px-6 py-5">
+                            {user ? 
+                            <div className='flex items-center gap-2 text-[16px]'>
+                                 <div
+                                    className="w-12 h-12 overflow-hidden rounded-full border border-zinc-700 bg-zinc-800"
+                                >
+                                    <img
+                                        src={user.avatar}
+                                        alt="Avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                
+                                </div>
+                                <p>{user.username}</p>
+                            </div>
+                            
+                            : 
+                              <Link href={'/login'} className='flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center  text-white cursor-pointer'>
+                                <p>Đăng nhập</p>
+                            </Link>
+                            }
                             <button
                                 onClick={() => SetopenMenu(false)}
-                                className="text-gray-400 hover:text-white text-xl p-1"
+                                className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
                             >
                                 ✕
                             </button>
                         </div>
 
-                        <nav className="flex flex-col gap-4 text-[16px]">
-                            <Link href={'/'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
-                                Trang Chủ
+                        <nav className="mt-4 flex flex-col px-4 z-50">
+
+                            <Link
+                                href="/"
+                                onClick={() => SetopenMenu(false)}
+                                className="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all hover:bg-neutral-900"
+                            >
+            
+                                <span className="text-neutral-200 group-hover:text-white">
+                                    Trang chủ
+                                </span>
                             </Link>
-                            <Link href={'/anime-pho-bien/trang-1'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
-                                Anime phổ biến
+
+                            <Link
+                                href="/anime-pho-bien/trang-1"
+                                onClick={() => SetopenMenu(false)}
+                                className="group mt-2 flex items-center gap-3 rounded-xl px-4 py-3 transition-all hover:bg-neutral-900"
+                            >
+                               
+                                <span className="text-neutral-200 group-hover:text-white">
+                                    Anime phổ biến
+                                </span>
                             </Link>
-                            <Link href={'/anime-trong-nam/trang-1'} onClick={() => SetopenMenu(false)} className="hover:text-blue-500 py-2 border-b border-gray-800/50">
-                                Anime trong năm
+
+                            <Link
+                                href="/anime-trong-nam/trang-1"
+                                onClick={() => SetopenMenu(false)}
+                                className="group mt-2 flex items-center gap-3 rounded-xl px-4 py-3 transition-all hover:bg-neutral-900"
+                            >
+                              
+                                <span className="text-neutral-200 group-hover:text-white">
+                                    Anime trong năm
+                                </span>
                             </Link>
                         </nav>
+
+                        <div className="absolute bottom-0 w-full border-t border-neutral-800 p-5">
+                            <p className="text-center text-xs text-neutral-500">
+                                © 2026 BoiMovie
+                            </p>
+                        </div>
                     </div>
                 </section>
             </div>

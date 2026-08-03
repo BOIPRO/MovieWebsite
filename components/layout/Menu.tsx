@@ -4,12 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 const Menu = () => {
-  // State quản lý trạng thái đóng/mở của menu trượt
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      {/* --- MÀN HÌNH LỚN (Code gốc của bạn) --- */}
       <div className="hidden xl:flex items-center text-gray-200 z-500">
         <Link href={'/'} className='flex gap-2 items-center cursor-pointer hover:text-blue-600'>
           <p>Trang Chủ</p>
@@ -22,7 +20,6 @@ const Menu = () => {
         ☰ Menu
       </button>
 
-      {/* --- LỚP NỀN MỜ (OVERLAY) --- */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/60 z-40 xl:hidden transition-opacity duration-300"
@@ -30,7 +27,6 @@ const Menu = () => {
         />
       )}
 
-      {/* --- SIDEBAR TRƯỢT TỪ TRÁI SANG --- */}
       <div
         className={`fixed top-0 left-0 h-full w-72 bg-slate-900 text-gray-200 shadow-2xl z-50 p-6 xl:hidden
           transform transition-transform duration-300 ease-in-out
