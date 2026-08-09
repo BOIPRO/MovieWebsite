@@ -5,7 +5,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="flex-none">
       {children}
     </div>
   );

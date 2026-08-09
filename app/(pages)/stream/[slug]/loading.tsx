@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-   <div className='max-w-[1350px] mx-auto animate-pulse text-[16px]'>
+   <div className='max-w-[1350px] mx-auto  animate-pulse text-[16px]'>
       <div className='gap-2 xl:flex xl:h-[500px]'>
         <div className='w-full xl:w-[70%] h-[300px] xl:h-[500px] bg-neutral-600 rounded-lg'></div>
         
