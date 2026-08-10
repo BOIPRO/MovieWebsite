@@ -9,14 +9,14 @@ import { useAuthStore } from '@/lib/services/useAuthStore'
 import AdvancedSearchModal from '../common/AdvancedSearch'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-interface NavBarProps {
-    user: {
-        username: string;
-        avatar: string;
-    };
-}
+// interface NavBarProps {
+//     user: {
+//         username: string;
+//         avatar: string;
+//     };
+// }
 
-const NavBar = ({ user }: NavBarProps) => {
+const NavBar = () => {
     const router = useRouter()
     const [openMenu, SetopenMenu] = useState(false);
     const [openSearch, SetopenSearch] = useState(false);
@@ -100,7 +100,7 @@ const NavBar = ({ user }: NavBarProps) => {
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
-                        {user ?
+                        {/* {user ?
                             <div className="relative">
                                 <button
                                     onClick={() => setopenProfile(!openProfile)}
@@ -142,7 +142,7 @@ const NavBar = ({ user }: NavBarProps) => {
                             <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center hidden text-white cursor-pointer'>
                                 <p>Đăng nhập</p>
                             </Link>
-                        }
+                        } */}
 
                     </div>
                     <div
@@ -158,7 +158,7 @@ const NavBar = ({ user }: NavBarProps) => {
     xl:hidden`}
                     >
                         <div className="flex items-center justify-between border-b border-neutral-800 px-6 py-5">
-                            {user ? 
+                            {/* {user ? 
                             <div className='flex items-center gap-2 text-[16px]'>
                                  <div
                                     className="w-12 h-12 overflow-hidden rounded-full border border-zinc-700 bg-zinc-800"
@@ -177,7 +177,7 @@ const NavBar = ({ user }: NavBarProps) => {
                               <Link href={'/login'} className='flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center  text-white cursor-pointer'>
                                 <p>Đăng nhập</p>
                             </Link>
-                            }
+                            } */}
                             <button
                                 onClick={() => SetopenMenu(false)}
                                 className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-800 hover:text-white"

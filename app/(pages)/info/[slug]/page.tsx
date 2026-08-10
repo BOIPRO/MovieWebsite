@@ -5,13 +5,13 @@ import ListEpsiodes from "@/components/common/ListEpisodes";
 import { AnimeDetailType } from "@/types/anime";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export const revalidate = 300;
-const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL
+
 async function getAnime(id: string): Promise<AnimeDetailType> {
   const res = await fetch(
     `${process.env.API_URL}/movies/info?id=${id}`,
@@ -28,61 +28,54 @@ async function getAnime(id: string): Promise<AnimeDetailType> {
 
   return res.json();
 }
-
-
 // SEO dynamic
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const id = String(slug.split("-").pop());
 
   const infoAnime = await getAnime(id);
+  const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL || "";
 
   return {
-    title: `${infoAnime.title} (${infoAnime.anilistData.title.romaji} - ${infoAnime.anilistData.title.english}) - BMovie`,
+    title: `${infoAnime.title} (${infoAnime.anilistData?.title?.romaji || ""} - ${infoAnime.anilistData?.title?.english || ""}) - BMovie`,
     description: infoAnime.description || `Xem anime ${infoAnime.title} tại BMovie`,
     keywords: [
-      `${infoAnime.title}`,
-      `${infoAnime.anilistData.title.romaji}`,
-      `${infoAnime.anilistData.title.english}`
-    ],
+      infoAnime.title,
+      infoAnime.anilistData?.title?.romaji,
+      infoAnime.anilistData?.title?.english,
+    ].filter(Boolean) as string[],
     openGraph: {
       siteName: "BMovie",
       locale: "vi_VN",
       countryName: "Việt Nam",
-      title: `${infoAnime.title} (${infoAnime.anilistData.title.romaji} - ${infoAnime.anilistData.title.english}) - BMovie`,
-      description:
-        infoAnime.description || `Xem anime ${infoAnime.title}`,
+      title: `${infoAnime.title} - BMovie`,
+      description: infoAnime.description || `Xem anime ${infoAnime.title}`,
       url: `${baseUrl}/info/${slug}`,
       images: [
         {
-          url: infoAnime.anilistData.coverImage.large,
+          url: infoAnime.anilistData?.coverImage?.large || "",
           width: 600,
           height: 900,
           alt: infoAnime.title,
         },
       ],
-      type: "video.episode",
+      type: "video.other",
     },
     alternates: {
-      canonical:  `${baseUrl}/info/${slug}`,
+      canonical: `${baseUrl}/info/${slug}`,
     },
     twitter: {
       card: "summary_large_image",
       title: `${infoAnime.title} - BMovie`,
-      description:
-        infoAnime.description || `Xem anime ${infoAnime.title}`,
-      images: [infoAnime.anilistData.coverImage.large],
+      description: infoAnime.description || `Xem anime ${infoAnime.title}`,
+      images: [infoAnime.anilistData?.coverImage?.large || ""],
     },
-    robots : {
-      index : true,
-      follow : true,
-    }
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
-
 
 const Page = async ({ params }: Props) => {
   const { slug } = await params;
@@ -96,9 +89,8 @@ const Page = async ({ params }: Props) => {
     }),
 
     fetch(`${process.env.API_URL}/movies/episodes?id=${id}`, {
-      next: {
+       next: {
         revalidate: 100,
-        tags: [`anime-episode-${id}`],
       },
     }),
   ]);

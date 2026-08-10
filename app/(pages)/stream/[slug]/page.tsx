@@ -1,6 +1,5 @@
 import VideoPlayer from './VideoPlayernew';
 import { Episode } from '@/types/episode';
-import { Suspense } from 'react';
 import ListEpsiodes from "@/components/common/ListEpisodes";
 type Props = {
   params: {
@@ -18,7 +17,7 @@ const page = async ({ params }: Props) => {
     const match2 = slug.match(/tap-(.*)/);
     const episodeNumber = match2 ? match2[1] : null!;
     const [resdata, resEpisode] = await Promise.all([
-      fetch(`${process.env.API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`, { cache: 'no-store' },),
+      fetch(`${process.env.API_URL}/movies/stream?anilistId=${anilistId}&episodeSlug=${episodeSlug}&provider=animevietsub&server=DU`, { next: { revalidate: 86400 } }),
       fetch(`${process.env.API_URL}/movies/episodes?id=${anilistId}`, { next: { revalidate: 300 } })
     ])
     const listEpisode: Episode[] = await resEpisode.json()
