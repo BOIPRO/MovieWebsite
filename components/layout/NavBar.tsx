@@ -9,6 +9,7 @@ import { useAuthStore } from '@/lib/services/useAuthStore'
 import AdvancedSearchModal from '../common/AdvancedSearch'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import api from '@/lib/services/axios'
 // interface NavBarProps {
 //     user: {
 //         username: string;
@@ -17,42 +18,56 @@ import { useRouter } from 'next/navigation'
 // }
 
 const NavBar = () => {
-    const router = useRouter()
     const [openMenu, SetopenMenu] = useState(false);
     const [openSearch, SetopenSearch] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [openProfile, setopenProfile] = useState(false)
-    const queryClient = useQueryClient()
+    const [user, setUser] = useState<{ username: string; avatar: string } | null>(null);
     const pathname = usePathname()
     const useAuthenStore = useAuthStore as any
     const isHomepage = pathname === '/';
 
-    useEffect(() => {
-        if (!isHomepage) return;
-
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setIsScrolled(true);
+  useEffect(() => {
+    if (!isHomepage) return;
+    const fetchUser = async () => {
+        try {
+            const { data } = await api.get('/auth/me');
+            setUser(data);
+        } catch (error : any) {
+           if (error.response?.status === 401) {
+                setUser(null);
             } else {
-                setIsScrolled(false);
+                console.error('Lỗi hệ thống khi lấy thông tin user:', error);
             }
-        };
+        }
+    };
+    fetchUser();
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+    
+    handleScroll();
 
-        handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [isHomepage]);
-
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, [isHomepage]);
+    
     const handleLogout = async () => {
         await fetch(`/api/bemovie/auth/logout`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
         });
-        queryClient.clear();
+        setUser(null);
         useAuthenStore.getState().clearAuth();
-        router.refresh();
     };
 
     const navbarBgClass = isHomepage
@@ -100,7 +115,7 @@ const NavBar = () => {
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
-                        {/* {user ?
+                        {user ?
                             <div className="relative">
                                 <button
                                     onClick={() => setopenProfile(!openProfile)}
@@ -142,7 +157,7 @@ const NavBar = () => {
                             <Link href={'/login'} className='xl:flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center hidden text-white cursor-pointer'>
                                 <p>Đăng nhập</p>
                             </Link>
-                        } */}
+                        }
 
                     </div>
                     <div
@@ -158,7 +173,7 @@ const NavBar = () => {
     xl:hidden`}
                     >
                         <div className="flex items-center justify-between border-b border-neutral-800 px-6 py-5">
-                            {/* {user ? 
+                            {user ? 
                             <div className='flex items-center gap-2 text-[16px]'>
                                  <div
                                     className="w-12 h-12 overflow-hidden rounded-full border border-zinc-700 bg-zinc-800"
@@ -177,7 +192,7 @@ const NavBar = () => {
                               <Link href={'/login'} className='flex flex-col gap-1 bg-blue-800 rounded-2xl text-[16px] py-2 px-4 justify-center items-center  text-white cursor-pointer'>
                                 <p>Đăng nhập</p>
                             </Link>
-                            } */}
+                            }
                             <button
                                 onClick={() => SetopenMenu(false)}
                                 className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
