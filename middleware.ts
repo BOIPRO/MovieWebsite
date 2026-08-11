@@ -10,7 +10,7 @@ const ipCache = new LRUCache<string, { count: number; resetTime: number }>({
 const LIMIT = 30; 
 const WINDOW_MS = 60 * 1000;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   console.log('--- MIDDLEWARE DA CHAY CHO URL:', request.url);
   const forwardedFor = request.headers.get('x-forwarded-for');
   const clientIp = forwardedFor 
@@ -26,7 +26,6 @@ export function middleware(request: NextRequest) {
     tokenData.count++;
     
     if (tokenData.count > LIMIT) {
-      console.log(`>>> ĐÃ CHẶN IP ${clientIp} do vượt quá giới hạn (${tokenData.count}/${LIMIT})`);
       return new NextResponse(
         JSON.stringify({ 
           success: false, 

@@ -56,7 +56,6 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
             return;
         }
         const controller = new AbortController();
-        // Debounce: Chờ 300ms sau khi người dùng ngừng gõ mới gọi API
         const delayDebounceFn = setTimeout(async () => {
             try {
                 const response = await fetch(`/api/bemovie/movies/suggest?q=${encodeURIComponent(searchTerm)}`);
@@ -76,12 +75,11 @@ export default function AdvancedSearchModal({ isOpen, onClose }: AdvancedSearchM
     const selectedResult = results[selectedIndex];
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            // Giả sử searchTerm là state lưu giá trị input
+           
             if (searchTerm.trim()) {
-                // Chuyển hướng sang trang search
                 router.push(`/search/${encodeURIComponent(searchTerm)}/trang-1`);
 
-                // Tùy chọn: Đóng popup hoặc reset state nếu cần
+             
                 onClose();
             }
         }
