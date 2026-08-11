@@ -28,7 +28,6 @@ const NavBar = () => {
     const isHomepage = pathname === '/';
 
   useEffect(() => {
-    if (!isHomepage) return;
     const fetchUser = async () => {
         try {
             const { data } = await api.get('/auth/me');
@@ -42,6 +41,7 @@ const NavBar = () => {
         }
     };
     fetchUser();
+     if (!isHomepage) return;
     const handleScroll = () => {
         if (window.scrollY > 50) {
             setIsScrolled(true);
