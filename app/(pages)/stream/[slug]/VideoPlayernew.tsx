@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Hls from "hls.js";
 import SliceData from '@/lib/services/decryptseg'
 interface Prop {
-    m3u8: string
+    m3u8URl: string
 }
 class PNGTsLoader {
     private loader: any;
@@ -55,14 +55,14 @@ class PNGTsLoader {
         this.loader.load(context, config, customCallbacks);
     }
 }
-export default function VideoPlayer({ m3u8 }: Prop) {
+export default function VideoPlayer({ m3u8URl }: Prop) {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const hlsRef = useRef<Hls | null>(null);
     useEffect(() => {
-        if (!m3u8 || !videoRef.current) return;
-        const blob = new Blob([m3u8], { type: 'application/vnd.apple.mpegurl' });
-        const blobUrl = URL.createObjectURL(blob);
-        if (!blobUrl || !videoRef.current) return;
+        if (!m3u8URl || !videoRef.current) return;
+        // const blob = new Blob([m3u8URl], { type: 'application/vnd.apple.mpegurl' });
+        // const blobUrl = URL.createObjectURL(blob);
+        // if (!blobUrl || !videoRef.current) return;
         if (hlsRef.current) {
             hlsRef.current.destroy();
             hlsRef.current = null;
@@ -78,7 +78,7 @@ export default function VideoPlayer({ m3u8 }: Prop) {
             maxBufferSize: 60 * 1024 * 1024, // 60MB
 
         });
-        hls.loadSource(blobUrl);
+        hls.loadSource(m3u8URl);
         hls.attachMedia(video);
         hls.on(Hls.Events.ERROR, (event, data) => {
             if (data.fatal) {
@@ -90,9 +90,9 @@ export default function VideoPlayer({ m3u8 }: Prop) {
         return () => {
             hls.stopLoad();
             hls.destroy();
-            URL.revokeObjectURL(blobUrl);
+            // URL.revokeObjectURL(blobUrl);
         };
-    }, [m3u8]);
+    }, [m3u8URl]);
 
     return <video ref={videoRef} className='flex-[2] w-full h-full ' controls playsInline />
 

@@ -21,12 +21,12 @@ const page = async ({ params }: Props) => {
       fetch(`${process.env.API_URL}/movies/episodes?id=${anilistId}`, { next: { revalidate: 300 } })
     ])
     const listEpisode: Episode[] = await resEpisode.json()
-    const data = await resdata.text()
+    const m3u8Url = await resdata.text()
     return (
     
         <div className='max-w-[1350px]  mx-auto '>
           <div className='gap-2  xl:flex xl:h-[500px]'>
-            <VideoPlayer m3u8={data} />
+            <VideoPlayer m3u8URl={m3u8Url} />
             <ListEpsiodes slug={`${slugAnime}-${anilistId}`} listEpisode={listEpisode} episodeNumberClicked={episodeNumber} />
           </div>
 
